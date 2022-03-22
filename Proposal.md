@@ -42,4 +42,4 @@ The third thrust of the project involves predictive modeling of review ratings b
 
 ## Brief Sketch
 
-![A screenshot of your application. Could be a GIF.](Data Analysis for Review Imbrovement.png)
+![picture alt](Data Analysis for Review Imbrovement.png)
