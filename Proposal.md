@@ -39,3 +39,7 @@ The first thrust of our efforts will focus on implementing a method to compute s
 The second thrust of the project will involve developing a wide range of visualizations that facilitate exploring the attributes of businesses similar to a queried business. An example of one such visualization is one that presents how the ratings of a restaurant have changed over time in comparison to others offering similar cuisine in the area. Another could include an interactive map of restaurants in an area where a user can interact with pins on the map to study their attributes. A visualization of this sort could help an aspiring business owner understand where to position their business based on attributes of business that are popular in certain areas. 
 
 The third thrust of the project involves predictive modeling of review ratings based on attributes of the business. A use case for this feature would be to identify attributes that will help boost your business’ ratings and reviews.
+
+## Brief Sketch
+
+![picture alt](http://via.placeholder.com/200x150)
