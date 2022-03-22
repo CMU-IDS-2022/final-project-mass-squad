@@ -26,8 +26,8 @@ checkin.json: This file has timings of checkins on different businesses.
 
 While the dataset delves into a variety of sections on the Yelp website, we plan to use only some of these sections. Our project will heavily focus on the first three categories i.e. businesses, reviews and users. 
 
-[1] https://www.yelp-ir.com/overview/default.aspx
-[2] Dataset source: https://www.yelp.com/dataset
+ [1] https://www.yelp-ir.com/overview/default.aspx
+ [2] Dataset source: https://www.yelp.com/dataset
 
 
 ## Solutions
