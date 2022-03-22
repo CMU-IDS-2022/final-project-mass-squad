@@ -17,17 +17,17 @@ The users will be able to interact with various visualizations and filters withi
 ## Dataset
 
 Yelp is a website that publishes crowdsourced reviews on businesses. As of February 2022, the site has 244 million reviews [1]. The Yelp Dataset is data on a subset of businesses, reviews and users present on the Yelp website. It is publicly available online [2] as a set of the following 6 JSON files:
-business.json: This file contains data about businesses on Yelp including location, attributes like WiFi or parking and open hours.
+ - business.json: This file contains data about businesses on Yelp including location, attributes like WiFi or parking and open hours.
  - review.json: This file contains review data including the content, start rating, reviewer’s user id, the corresponding business id which can be mapped to business.json and the number of useful votes the review received.
  - user.json: This file has metadata on the users present on the site including name, user id, number of reviews they’ve written, their fans, their friends etc.
-checkin.json: This file has timings of checkins on different businesses.
+ - checkin.json: This file has timings of checkins on different businesses.
  - tip.json: This file has data on tips i.e. short suggestions written for different businesses by the users.
  - photo.json: This file has image data including the corresponding business id, caption and label signifying the category like food or menu etc.
 
 While the dataset delves into a variety of sections on the Yelp website, we plan to use only some of these sections. Our project will heavily focus on the first three categories i.e. businesses, reviews and users. 
 
- [1] https://www.yelp-ir.com/overview/default.aspx
- [2] Dataset source: https://www.yelp.com/dataset
+ - [1] https://www.yelp-ir.com/overview/default.aspx
+ - [2] Dataset source: https://www.yelp.com/dataset
 
 
 ## Solutions
