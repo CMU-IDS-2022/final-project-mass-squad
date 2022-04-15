@@ -111,9 +111,9 @@ The following graphs give a brief description of how specific categories impact 
 
 ![picture alt](images/h_2.png)
 
+Average number of reviews received by businesses in the same category as the user's business plotted against the number of reviews received by the user's business over the years.
 ![picture alt](images/review_count.jpg)
 
+Word Cloud representing the most frequently used words in the reviews received by the businesses in a particular category.
 ![picture alt](images/word_cloud.jpg)
-
-
 
