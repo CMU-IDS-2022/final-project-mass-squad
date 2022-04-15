@@ -48,7 +48,31 @@ The third thrust of the project involves predictive modeling of review ratings b
 
 ### Data Preprocessing
 
+While substantial cleaning wasn’t necessary as yelp dataset is very clean. We performed basic cleaning to obtain subset of data relevant for our project and remove any outliers that might skew our analysis.
+
+#### business.json
+This file consists information related to each business_id, including the location, number of reviews received, star rating and category. 
+
+ 1. Dropping NULL values: We found that ‘neighborhood’ was a sparse field. Moreover, dropping any row with null value removed two-thirds of the raw data. 
+ 2. We chose to focus on only those businesses that are currently open. We found that around 20% of the businesses were closed. 
+ 3. We also wished to remove those businesses that had very few reviews as these reviews might be outliers and might not conform to general consensus about the business. 
+ 4. To get an idea of what the threshold for dropping should be, we analysed statistics pertaining to the ‘review_count’ column. 
+The minimum reviews received was 3, while maximum was 7000. The average review count was 41. Based on this, we dropped all businesses having a review count below 6. This was around 30% of the remaining entries.
+ 5. Studying the categories in business.json, we found that ‘Restaurants’ is the most populous category. 
+
+#### reviews.json:
+
+ 1. We started processing the file was by dropping null values.
+ 2. We only kept reviews that were useful, we found only 20% of the entire reviews were useful.
+ 3. Next we focused on the time of creation of reviews. We saw that the the reviews are between 2005 - 2017.
+ 4. We obtained year-wise breakdown of these so that we can filter them during our project for relevant and up-to-date visualizations.
+
+
 ### System Design 
+
+#### System Components
+
+#### Visualisations
 
 The following sketches illustrate how we plan to present data to users in a way that facilitates the goal of our project - enabling business owners to compare their businesses to their competitors and understand what factors lead to better or worse reviews. 
 
