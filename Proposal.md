@@ -59,6 +59,11 @@ This file consists information related to each business_id, including the locati
  4. To get an idea of what the threshold for dropping should be, we analysed statistics pertaining to the ‘review_count’ column. 
 The minimum reviews received was 3, while maximum was 7000. The average review count was 41. Based on this, we dropped all businesses having a review count below 6. This was around 30% of the remaining entries.
  5. Studying the categories in business.json, we found that ‘Restaurants’ is the most populous category. 
+ 
+ 
+ ![picture alt](images/1-business-raw.png)
+ ![picture alt](images/2-business-count.png)
+ ![picture alt](images/3-business-categories.png)
 
 #### reviews.json:
 
@@ -67,10 +72,25 @@ The minimum reviews received was 3, while maximum was 7000. The average review c
  3. Next we focused on the time of creation of reviews. We saw that the the reviews are between 2005 - 2017.
  4. We obtained year-wise breakdown of these so that we can filter them during our project for relevant and up-to-date visualizations.
 
+ ![picture alt](images/4-reviews-raw.png)
+ ![picture alt](images/5-reviews-count.png)
+ ![picture alt](images/6-reviews-timestats.png)
+ ![picture alt](images/7-reviews-yearwise.png)
 
 ### System Design 
 
 #### System Components
+
+##### Understanding which attributes lead to better reviews - 
+
+The primary goal of the project is to understand which features of a business are correlated with high average ratings. To this end, we aggregate data from all businesses in the dataset and plot graphs that describe a distribution of attributes over ratings. The strategy is to provide the restaurant owner with insights which tell them that certain attributes are correlated with higher ratings than others like takeout availability leads to higher ratings. Having a safe place to park without the stress of a ticket is another thing that helps put the customer at ease which is why they enjoy the food more. Also we provide the owner with the option to compare the performance of the restaurants within their vicinity, by giving them an option to see ratings in a specific state or a locality.
+
+##### Understanding factors that affect a specific business' ratings - 
+* Using the word cloud from the negative reviews the idea is to relay to the owners the specific shortcomings of their restaurant which they can then improve upon by seeing criticisms mentioned by the customers. The word cloud would be helpful in highlighting the specific reasonings as to why the restaurant received lower ratings. Providing it time based granularity gives the restaurant the option to specifically look at what went right and what went wrong during a particular time duration.
+* We also provide the user with visualizations that enable them to understand what attributes they lack that their competitors with better reviews exhibit as well as what attributes they share with competitors that have worse reviews.
+
+##### Computing similarity between pairs of businesses 
+To facilitate comparison of businesses, we need a measure of similarity. We propose to represent each business by a binary attribute vector that encodes the presence of absence of each attribute a business can exhibit (e.g. validated parking, open on weekends etc.). We then use cosine similarity between these binary attribute vectors as a measure of similarity between businesses. Once computed, we use these scores to select the top n most similar businesses and construct visualizations that allow comparison to the given business.
 
 #### Visualisations
 
@@ -90,6 +110,10 @@ The following graphs give a brief description of how specific categories impact 
 ![picture alt](images/h_1.png)
 
 ![picture alt](images/h_2.png)
+
+![picture alt](images/review_count.jpg)
+
+![picture alt](images/word_cloud.jpg)
 
 
 
