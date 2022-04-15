@@ -61,5 +61,10 @@ The Yelp dataset contains location information for every business. We use this l
 Once a business owner has identified their competition, they might want to see how thier business' reviews have changed over time in comparison their competitors. It is not enough to simply see a declining or improving trend of ratings compared to their competitors. A reader should be able to understand why or how this trend has come to be. This visualization plots line graphs of a business' average ratings with that of a competitor over time. To enable an understanding of how this trend came to be, both lines will have a shared toolip indicating which attributes the businesses had in common at that point of time, and which ones the competing bussiness had but the reader's business did not. This will help make associations between business attributes and ratings. This visualization will also feature a time range selector to allow the reader to study changes in a specific timeframe
 ![picture alt](images/time_compare.png)
 
+The following graphs give a brief description of how specific categories impact the overall distribution of ratings, thus giving the business owners an idea of where they need improvement in these specific categories:
+![picture alt](images/h_1.png)
+
+![picture alt](images/h_2.png)
+
 
 
