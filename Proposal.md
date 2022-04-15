@@ -62,6 +62,7 @@ Once a business owner has identified their competition, they might want to see h
 ![picture alt](images/time_compare.png)
 
 The following graphs give a brief description of how specific categories impact the overall distribution of ratings, thus giving the business owners an idea of where they need improvement in these specific categories:
+
 ![picture alt](images/h_1.png)
 
 ![picture alt](images/h_2.png)
