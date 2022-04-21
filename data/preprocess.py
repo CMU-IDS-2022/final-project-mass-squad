@@ -1,17 +1,22 @@
+from numpy import dtype
 import pandas as pd
-
+import json
 #raw_business_df = pd.read_csv('yelp_business.csv')
-raw_business_df = pd.read_json('yelp_academic_dataset_business.json', orient='records')
+f = open('yelp_academic_dataset_business.json')
+ 
+# returns JSON object as
+# a dictionary
+data = json.load(f)
+raw_business_df = pd.json_normalize(data)
 
-print(raw_business_df.keys())
 
 
 # entries in raw df => neighborhood is sparse (decide if needed)
 #print(raw_business_df.count())
 
 # filter 1: drop if any field is null 
-cleaned_df = raw_business_df.fillna(value='false')
-
+cleaned_df = raw_business_df[raw_business_df['categories'].notna()]
+print(cleaned_df.count())
 
 # filter 2: is_open = true
 # only business open currently are relevant
@@ -35,4 +40,4 @@ restaurants_df = cleaned_df[cleaned_df['is_restaurant'] == True]
 restaurants_df = restaurants_df.drop(columns = ['is_restaurant'])
 print(restaurants_df['latitude'])
 # final csv has businesses that include 'Restaurants' in categories
-restaurants_df.to_csv('processed_business.csv')
+restaurants_df.to_csv('processed_business_attributes.csv')
