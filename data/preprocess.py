@@ -7,7 +7,7 @@ f = open('yelp_academic_dataset_business.json')
 # returns JSON object as
 # a dictionary
 data = json.load(f)
-raw_business_df = pd.json_normalize(data)
+raw_business_df = pd.json_normalize(data, max_level=5)
 
 
 
