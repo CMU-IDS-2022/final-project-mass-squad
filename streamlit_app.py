@@ -2,6 +2,12 @@ from numpy import int32
 import streamlit as st
 import pandas as pd
 import altair as alt
+#from wordcloud import WordCloud
+#import nltk
+#nltk.download('stopwords')
+from nltk.corpus import stopwords
+import matplotlib.pyplot as plt
+from sklearn.feature_extraction._stop_words import ENGLISH_STOP_WORDS
 
 from OverallView import overallVis
 st.title("Yelp Restaraunt Analysis")
@@ -41,3 +47,57 @@ progression_chart = alt.Chart(d).mark_line().encode(
     color=feature_selectbox+':N'
 )
 st.write(progression_chart)
+
+
+@st.cache
+def read_data():
+    merged_df = pd.read_csv('data/merged_reviews.csv')
+    return merged_df
+
+merged_df = read_data()
+all_business_ids = merged_df['business_id'].tolist()
+
+st.dataframe(merged_df)
+'''
+## Analyse your business with visualizations!
+'''
+feature_selectbox = st.selectbox("Select your business_id", all_business_ids)
+
+# TODO: change to dynamic
+my_business_df = merged_df[merged_df['business_id'] == "-050d_XIor1NpCuWkbIVaQ"]
+
+'''
+## WORDCLOUD
+stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
+full_text = ' '.join(my_business_df['text'].dropna())
+cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set).generate(full_text)
+plt.imshow(cloud_no_stopword, interpolation='bilinear')
+plt.axis('off')
+#plt.show()
+st.pyplot()
+'''
+
+'''
+## STAR DISTRIBUTION
+'''
+df = pd.DataFrame(my_business_df['stars_review'].value_counts(), columns=['stars_review'])
+st.dataframe(my_business_df['stars_review'].value_counts())
+st.bar_chart(df)
+
+'''
+## RATING OVER TIME
+'''
+my_business_df['date'] = pd.to_datetime(my_business_df['date'])
+date_df = my_business_df.groupby(my_business_df.date.dt.year).mean()
+st.dataframe(date_df['stars_review'])
+date_df = date_df.reset_index()
+#st.line_chart(date_df['stars_review'])
+
+ratings_chart = alt.Chart(date_df).mark_line().encode(
+  x=alt.X('date:T', title="Year"),
+  y=alt.Y('stars_review:Q', title = "Average Star rating from Reviews"),
+  tooltip = ['stars_review']
+).properties(
+    title="Average Star Ratings over Time"
+)
+st.altair_chart(ratings_chart)
