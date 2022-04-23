@@ -209,7 +209,8 @@ def specific_restaraunt():
     ## STAR DISTRIBUTION
     '''
     df = pd.DataFrame(my_business_df['stars_review'].value_counts(), columns=['stars_review'])
-    st.dataframe(my_business_df['stars_review'].value_counts())
+    if st.checkbox("Show Star Rating Count"):
+        st.dataframe(my_business_df['stars_review'].value_counts())
     distribution_df = my_business_df['stars_review'].value_counts().reset_index()
 
     distribution_chart = alt.Chart(distribution_df).mark_bar().encode(
@@ -227,18 +228,20 @@ def specific_restaraunt():
     '''
     my_business_df['date'] = pd.to_datetime(my_business_df['date'])
     date_df = my_business_df.groupby(my_business_df.date.dt.year).mean()
-    st.dataframe(date_df['stars_review'])
+    if st.checkbox("Show Year-wise Average Star Rating"):
+        st.dataframe(date_df['stars_review'])
     date_df = date_df.reset_index()
     #st.line_chart(date_df['stars_review'])
 
-    ratings_chart = alt.Chart(date_df).mark_line().encode(
-    x=alt.X('date:T', title="Year"),
-    y=alt.Y('stars_review:Q', title = "Average Star rating from Reviews"),
-    tooltip = ['stars_review']
+    ratings_chart = alt.Chart(date_df).encode(
+        x=alt.X('date:T', title="Year"),
+        y=alt.Y('stars_review:Q', title = "Average Star rating from Reviews"),
+        tooltip = ['stars_review']
     ).properties(
         title="Average Star Ratings over Time"
-    ).interactive()
-    st.altair_chart(ratings_chart)
+    )
+    st.altair_chart((ratings_chart.mark_line() + ratings_chart.mark_point(filled=True, size=40)).interactive())
+
 
 
 def display_graph(selection="Hello"):
