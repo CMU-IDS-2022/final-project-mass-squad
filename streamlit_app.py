@@ -4,6 +4,11 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from wordcloud import WordCloud
+from nltk.corpus import stopwords
+import matplotlib.pyplot as plt
+from sklearn.feature_extraction._stop_words import ENGLISH_STOP_WORDS
+
+from OverallView import overallVis
 
 
 st.set_page_config(layout="wide")
@@ -13,18 +18,27 @@ st.markdown(
     """,
     unsafe_allow_html=True)
 
-#st.sidebar.image("img/proto.png", use_column_width=True, output_format="PNG")
+st.sidebar.image("yelp-logo-vector.png", use_column_width=True, output_format="PNG")
 
 #import nltk
 #nltk.download('stopwords')
-def AllForNow():
-    from nltk.corpus import stopwords
-    import matplotlib.pyplot as plt
-    from sklearn.feature_extraction._stop_words import ENGLISH_STOP_WORDS
+@st.cache
+def read_data():
+    merged_df = pd.read_csv('data/merged_reviews.csv')
+    return merged_df
 
-    from OverallView import overallVis
+merged_df = read_data()
+obj = overallVis()
+
+def welcome_page():
+    if st.checkbox("Show Cleaned Data"):
+        st.write("Cleaning involved splitting data by spaces, combining entires like 'tropical datastorm' that got split redundantly, formatting strings with extra quotes, and for pressure as the storm becomes a Hurricane the pressure drops to lowest possible levels thus we have filled the NaN with 0")
+        st.write(merged_df)
+        st.write(obj.df)
+
+def overall_view():
+    
     st.title("Yelp Restaraunt Analysis")
-    obj = overallVis()
 
     data = obj.df
     all_keys = data.keys().to_list()
@@ -32,8 +46,6 @@ def AllForNow():
     for i in range(len(all_keys)):
         if 'attributes' in all_keys[i]:
             list_of_attributes.append(all_keys[i])
-
-    st.write(data)
 
     parameter_name_lookup = dict()
     rename = dict()
@@ -43,34 +55,26 @@ def AllForNow():
         rename[list_of_attributes[i]] = text
     feature_selectbox = st.selectbox("Select visualisation paramter", parameter_name_lookup.keys())
     data.rename(columns=rename, inplace=True)
-    #storm_data = visualise_storm(name_selectbox, year_selectbox)
     new_data = data[['stars', feature_selectbox]].dropna()
-    #new_data = new_data.groupby(['stars']).count()
-    #new_data = new_data.pivot_table('stars', parameter_name_lookup[feature_selectbox], aggfunc='count').reset_index()
-    #print(new_data)
-    #print(data[list_of_attributes].mean())
-    #d = pd.crosstab(new_data.stars, columns=new_data[parameter_name_lookup[feature_selectbox]]).cumsum()
 
     d = pd.crosstab(new_data[feature_selectbox], columns=new_data.stars)
     d = d.stack().reset_index()
     d = d.rename(columns={0:'CummulativeCount'})
     progression_chart = alt.Chart(d).mark_line().encode(
-        x = 'stars',
-        y='CummulativeCount',
-        color=feature_selectbox+':N'
+        x = alt.X('stars', axis=alt.Axis(title='Star Ratings')),
+        y=alt.Y('CummulativeCount', axis=alt.Axis(title='Count')),
+        color=alt.Color(feature_selectbox, legend=alt.Legend(title=feature_selectbox))
+    ).properties(
+    width=1200,
+    height=600,
+    title='Star Ratings vs ' + feature_selectbox
     )
     st.write(progression_chart)
 
 
-    @st.cache
-    def read_data():
-        merged_df = pd.read_csv('data/merged_reviews.csv')
-        return merged_df
-
-    merged_df = read_data()
+def specific_restaraunt():
     all_business_ids = merged_df['name'].unique().tolist()
 
-    st.dataframe(merged_df)
     '''
     ## Analyse your business with visualizations!
     '''
@@ -132,11 +136,14 @@ def display_graph(selection="Hello"):
     if "menu" in st.session_state:
         selection = st.session_state.menu
     if selection == 'Overall Landscape':
-        st.markdown('stuff')
+        overall_view()
     elif selection == "Your Restaraunt":
-        AllForNow()
+        specific_restaraunt()
     elif selection == "Similarity Check":
-        AllForNow()
+        #AllForNow()
+        st.markdown('hello my good friend')
+    else:
+        welcome_page()
 
 st.session_state.mask = 'Hello'
 
