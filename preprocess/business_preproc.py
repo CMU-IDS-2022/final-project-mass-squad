@@ -25,7 +25,6 @@ bool_attrs = [
     'attributes.DogsAllowed',
     'attributes.GoodForKids',
     'attributes.BusinessAcceptsBitcoin',
-    'attributes.Smoking',
 ]
 
 
@@ -58,6 +57,11 @@ def filter(df):
     df = df[df.categories.notna()]
     df = df[df['categories'].str.contains("Restaurant|Restaurants|Food") == True]
     return df
+
+
+def clean_bool(df):
+    for attribute in bool_attrs:
+        df[attribute] = df[attribute].replace({'False': 0, 'True': 1, False: 0, True: 1, 'None': 0})
 
 
 if __name__ == "__main__":
