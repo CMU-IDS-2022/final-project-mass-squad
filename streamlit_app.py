@@ -97,7 +97,17 @@ def AllForNow():
     '''
     df = pd.DataFrame(my_business_df['stars_review'].value_counts(), columns=['stars_review'])
     st.dataframe(my_business_df['stars_review'].value_counts())
-    st.bar_chart(df)
+    distribution_df = my_business_df['stars_review'].value_counts().reset_index()
+
+    distribution_chart = alt.Chart(distribution_df).mark_bar().encode(
+    y=alt.Y('stars_review', title="Rating Count"),
+    x=alt.X('index:N', title = "Star-rating"),
+    ).properties(
+        title="Star Rating Distribution",
+        width=600
+
+    ).interactive()
+    st.altair_chart(distribution_chart)
 
     '''
     ## RATING OVER TIME
@@ -114,7 +124,7 @@ def AllForNow():
     tooltip = ['stars_review']
     ).properties(
         title="Average Star Ratings over Time"
-    )
+    ).interactive()
     st.altair_chart(ratings_chart)
 
 
