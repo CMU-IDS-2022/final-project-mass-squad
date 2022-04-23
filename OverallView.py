@@ -4,7 +4,7 @@ import altair as alt
 
 class overallVis:
     def __init__(self):
-        self.df =  pd.read_csv('/home/sidharth/Documents/2022/Spring-2022/IDS/final-project-mass-squad/data/processed_business_attributes.csv', dtype=str)
+        self.df =  pd.read_csv('data/processed_business_attributes.csv', dtype=str)
         self.df = self.df.drop(columns = ['Unnamed: 0', 'hours', 'attributes'])
         #d = {'true': True, 'false': False}
         #c = {1: True, 0: False}
