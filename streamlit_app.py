@@ -136,7 +136,7 @@ def overall_view():
         rename[list_of_attributes[i]] = text
     feature_selectbox = st.selectbox("Select visualisation paramter", parameter_name_lookup.keys())
     data.rename(columns=rename, inplace=True)
-    new_data = data[['stars', feature_selectbox]].dropna()
+    new_data = data[['stars', feature_selectbox]]
 
     d = pd.crosstab(new_data[feature_selectbox], columns=new_data.stars)
     d = d.stack().reset_index()
@@ -180,23 +180,6 @@ def overall_view():
         width=800, height=400
     )
     st.write(layered_chart)
-
-    '''new_data = data[['stars', feature_selectbox]].dropna()
-
-    d = pd.crosstab(new_data[feature_selectbox], columns=new_data.stars)
-    d = d.stack().reset_index()
-    d = d.rename(columns={0:'CummulativeCount'})
-    progression_chart = alt.Chart(d).mark_line().encode(
-        x = alt.X('stars', axis=alt.Axis(title='Ratings Count')),
-        y=alt.Y('CummulativeCount', axis=alt.Axis(title='Count')),
-        color=alt.Color(feature_selectbox, legend=alt.Legend(title=feature_selectbox))
-    ).properties(
-    width=1200,
-    height=600,
-    title='Ratings Counter vs ' + feature_selectbox
-    )
-    st.write(progression_chart)'''
-
 
 def specific_restaraunt():
     all_business_ids = merged_df['name'].unique().tolist()

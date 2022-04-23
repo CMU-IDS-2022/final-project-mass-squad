@@ -1,0 +1,8 @@
+streamlit
+pandas
+altair
+plotly
+wordcloud
+nltk
+streamlit_folium
+folium
