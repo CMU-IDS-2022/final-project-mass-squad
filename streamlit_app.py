@@ -7,6 +7,9 @@ from wordcloud import WordCloud
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 from sklearn.feature_extraction._stop_words import ENGLISH_STOP_WORDS
+import folium
+from streamlit_folium import folium_static
+
 
 from OverallView import overallVis
 
@@ -26,6 +29,84 @@ st.sidebar.image("yelp-logo-vector.png", use_column_width=True, output_format="P
 def read_data():
     merged_df = pd.read_csv('data/merged_reviews.csv')
     return merged_df
+
+@st.cache
+def load_data():
+    """
+    Write 1-2 lines of code here to load the data from CSV to a pandas dataframe
+    and return it.
+    """
+    busi = pd.read_csv("data/processed_business_anj.csv")
+    busi['name'] = busi['name'].str.replace('"','')
+    return busi
+
+@st.cache
+def get_filtered_rows(df, df_cat, selected_category, selected_rating):
+    """
+    Implement a function that computes which rows of the given dataframe should
+    be part of the slice, and returns a boolean pandas Series that indicates 0
+    if the row is not part of the slice, and 1 if it is part of the slice.
+    
+    In the example provided, we assume genders is a list of selected strings
+    (e.g. ['Male', 'Transgender']). We then filter the labels based on which
+    rows have a value for gender that is contained in this list. You can extend
+    this approach to the other variables based on how they are returned from
+    their respective Streamlit components.
+    """
+    labels = pd.Series([True] * len(df), index=df.index)
+    if selected_category:
+        l = df_cat["business_id"][df_cat['categories'].isin(selected_category)].tolist()
+        labels &= df['business_id'].isin(l)
+    if selected_rating:
+        labels &= df['stars'].between(selected_rating[0],selected_rating[1],inclusive='both')
+    
+    return labels
+
+def get_popup_content(row): 
+    content = "<h3>"+row["name"]+", "+row["city"]+", "+row["state"]+"</h3><hr>Neighborhood: "+row["neighborhood"]+"<br>Address: "+row["address"]+"<br>Average Stars: "+str(row["stars"])
+    iframe = folium.IFrame(content, width=275, height=150)
+    popup = folium.Popup(iframe)
+    return popup
+  
+
+def generate_map_vis(CITY = "Westmount"):
+    st.title("Map Plot of Yelp Restaurants")
+    with st.spinner(text="Loading data..."):
+        busi = load_data()
+
+    df = busi[busi["city"]==CITY]
+    df_cat = df[['business_id','categories']]
+    df_cat['categories'] = df_cat['categories'].str.split(";")
+    df_cat = df_cat.explode('categories')
+    df_cat = df_cat[df_cat["categories"]!="Restaurants"]
+
+    selected_category = st.multiselect("Category", df_cat['categories'].unique())
+    selected_rating = st.slider("Average Rating",0,5,(1,4))
+
+    filters = get_filtered_rows(df, df_cat, selected_category, selected_rating)
+    filters = df[filters]
+
+    with st.spinner(text="Filtering Restaurants"):
+        base_map = folium.Map(
+        location=[45.4784, -73.6028],height='100%', width = '100%',
+        tiles='https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=1HxubgB7ToJiUX3kEi7hGfaFJoxPpDwExwEifjbBjcOXE7m0mLsvxzA7McLVTRbf',
+        attr="Tiles Courtesy of Jawg Maps")
+
+        sw = df[['latitude', 'longitude']].min().values.tolist()
+        ne = df[['latitude', 'longitude']].max().values.tolist()
+
+        base_map.fit_bounds([sw, ne]) 
+
+        for i in range(0,len(filters)):
+            popup_content = get_popup_content(filters.iloc[i])   
+            folium.Marker(
+                location=[filters.iloc[i]['latitude'], filters.iloc[i]['longitude']],
+                tooltip="<b>"+filters.iloc[i]['name']+"</b>",
+                popup= popup_content
+            ).add_to(base_map)
+        
+        folium_static(base_map)
+
 
 merged_df = read_data()
 obj = overallVis()
@@ -185,8 +266,7 @@ def display_graph(selection="Hello"):
     elif selection == "Your Restaraunt":
         specific_restaraunt()
     elif selection == "Similarity Check":
-        #AllForNow()
-        st.markdown('hello my good friend')
+        generate_map_vis() 
     else:
         welcome_page()
 
