@@ -62,6 +62,7 @@ def filter(df):
 def clean_bool(df):
     for attribute in bool_attrs:
         df[attribute] = df[attribute].replace({'False': 0, 'True': 1, False: 0, True: 1, 'None': 0})
+    return df
 
 
 if __name__ == "__main__":
@@ -74,7 +75,7 @@ if __name__ == "__main__":
     df = clean_wifi(df)
 
     df[bool_attrs] = df[bool_attrs].fillna(False)
-
+    df = clean_bool(df)
     all_attrs = keep_attrs + bool_attrs
     df = df[all_attrs]
 
