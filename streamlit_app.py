@@ -88,7 +88,7 @@ def plot_map(user_row, df, bounds = None):
                 popup= popup_content
             ).add_to(base_map)
 
-    popup_content = "<h2>Your Business!</h2><br>"+get_popup_content(user_row)   
+    popup_content = get_popup_content(user_row, seed="<h2>Your Restaurant!</h2><br>")   
     folium.Marker(
         location=[user_row['latitude'], user_row['longitude']],
         tooltip="<b>"+user_row['name']+"</b>",
@@ -98,9 +98,9 @@ def plot_map(user_row, df, bounds = None):
 
     return base_map
 
-def get_popup_content(row): 
+def get_popup_content(row, seed=""): 
     photos = os.listdir(PHOTO_DIR)
-    content = "<h3>"+str(row["name"])+", "+str(row["city"])+", "+str(row["state"])+"</h3><hr><h4>"+str(row["categories"])+"</h4>" 
+    content = seed+"<h3>"+str(row["name"])+", "+str(row["city"])+", "+str(row["state"])+"</h3><hr><h4>"+str(row["categories"])+"</h4>" 
     if(str(row["photo_id"])+".jpg" in photos):
         # print(row["photo_id"])
         img_path = os.path.join(PHOTO_DIR,str(row["photo_id"])+".jpg")
