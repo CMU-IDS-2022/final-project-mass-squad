@@ -7,3 +7,4 @@ nltk
 streamlit_folium
 folium
 markdown
+sklearn
