@@ -26,8 +26,8 @@ st.markdown(
 
 st.sidebar.image("yelp-logo-vector.png", use_column_width=True, output_format="PNG")
 
-#import nltk
-#nltk.download('stopwords')
+import nltk
+nltk.download('stopwords')
 @st.cache
 def read_data():
     merged_df = pd.read_csv('data/merged_reviews.csv')
