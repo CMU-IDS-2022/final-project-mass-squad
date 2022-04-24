@@ -88,7 +88,7 @@ def plot_map(user_row, df, bounds = None):
                 popup= popup_content
             ).add_to(base_map)
 
-    popup_content = get_popup_content(user_row, seed="<h2>Your Restaurant!</h2><br>")   
+    popup_content = get_popup_content(user_row, seed="<h2>Your Restaurant!</h2>")   
     folium.Marker(
         location=[user_row['latitude'], user_row['longitude']],
         tooltip="<b>"+user_row['name']+"</b>",
@@ -104,7 +104,7 @@ def get_popup_content(row, seed=""):
     if(str(row["photo_id"])+".jpg" in photos):
         # print(row["photo_id"])
         img_path = os.path.join(PHOTO_DIR,str(row["photo_id"])+".jpg")
-
+        # if(os.path.isdir(img_path)):
         encoded = base64.b64encode(open(img_path, 'rb').read())
         content = content + '<img src="data:image/png;base64,{}" alt={} height=300 width=300><br><br>'.format(encoded.decode('UTF-8'),str(row['name']))
 
@@ -125,11 +125,11 @@ def generate_map_vis(business_id):
     filter_option = st.radio("Compare To: ",["Similar Businesses in State","Businesses in the Same City"], index = 1)
 
     if(filter_option == "Similar Businesses in State"):
-        df = similarity(business_id, busi, 30)
+        df = similarity(business_id, busi, 50)
     else:
         CITY=user_row["city"]
         print(CITY)
-        df = busi[busi["city"]==CITY]
+        df = busi[busi["city"]==CITY][:50]
 
     df_cat = df[['business_id','categories']]
     df_cat['categories'] = df_cat['categories'].str.split(",")
