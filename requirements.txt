@@ -6,3 +6,4 @@ wordcloud
 nltk
 streamlit_folium
 folium
+markdown
