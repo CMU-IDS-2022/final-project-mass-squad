@@ -71,7 +71,7 @@ if __name__ == "__main__":
     df = load_json(args.in_file)
     df = filter(df)
     df = clean_name(df)
-    df = clean_categories(df)
+    # df = clean_categories(df)  # Uncomment if you want to split categories into a list
     df = clean_wifi(df)
 
     df[bool_attrs] = df[bool_attrs].fillna(False)
