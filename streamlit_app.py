@@ -66,6 +66,9 @@ def get_filtered_rows(df, df_cat, selected_category, selected_rating):
     
     return labels
 
+@st.cache
+def load_reviews_without_text():
+    return pd.read_csv("data/preprocess_reviews_no_text.csv")
 
 def plot_map(user_row, df, bounds = None):
     base_map = folium.Map(
