@@ -146,7 +146,7 @@ def generate_map_vis(business_id):
 
     filters = df[filters]
 
-    with st.spinner(text="Filtering Restraunts"):
+    with st.spinner(text="Filtering Restaurant"):
         sw = df[['latitude', 'longitude']].min().values.tolist()
         ne = df[['latitude', 'longitude']].max().values.tolist()
         bounds = [sw,ne]
@@ -164,7 +164,7 @@ def welcome_page():
         st.write(obj.df)
 
 
-def specific_restaraunt():
+def specific_restaurant():
     all_business_ids = merged_df['name'].unique().tolist()
 
     '''
@@ -282,9 +282,9 @@ def display_graph(selection="Hello"):
     if "menu" in st.session_state:
         selection = st.session_state.menu
     if selection == 'Overall Landscape':
-        st.title("Overall Landscape of restaraunts")
+        st.title("Overall Landscape of restaurants")
         obj.overall_view()
-    elif selection == "Your Restaraunt":
+    elif selection == "Your Restaurant":
         specific_restaraunt()
     elif selection == "Similarity Check":
         generate_map_vis("MTSW4McQd7CbVtyjqoe9mw") 
@@ -295,8 +295,8 @@ def display_graph(selection="Hello"):
 st.session_state.mask = 'Hello'
 
 selector = st.sidebar.selectbox(
-    "Yelp Restaraunt Analysis",
-    ("Select One", "Overall Landscape", "Your Restaraunt", "Similarity Check"),
+    "Yelp Restaurant Analysis",
+    ("Select One", "Overall Landscape", "Your Restaurant", "Similarity Check"),
     on_change=display_graph(),
     key="menu",
 )
