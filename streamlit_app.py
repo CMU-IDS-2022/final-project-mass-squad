@@ -212,9 +212,9 @@ def specific_restaurant():
     ## WORDCLOUD FOR BOTH POSITIVE AND NEGATIVE REVIEWS
     stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
     full_text = ' '.join(positive_df['text'].dropna())
-    cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='ocean', width=800, height=400, repeat=True).generate(full_text)
+    cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='Greens', width=800, height=400, repeat=True).generate(full_text)
     neg_full_text = ' '.join(negative_df['text'].dropna())
-    neg_cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='CMRmap', width=800, height=400, repeat=True).generate(neg_full_text)
+    neg_cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='Reds', width=800, height=400, repeat=True).generate(neg_full_text)
     fig, ax = plt.subplots(1,2)
     ax[0].imshow(cloud_no_stopword, interpolation='bilinear')
     ax[0].axis('off')
