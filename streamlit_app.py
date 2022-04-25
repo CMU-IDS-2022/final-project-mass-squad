@@ -206,14 +206,15 @@ def specific_restaurant():
     feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
 
     my_business_df = merged_df[merged_df['name'] == feature_selectbox]
+    
     postive_df = my_business_df['stars_review' > 2]
     negative_df = my_business_df['stars_review' < 3]
     ## WORDCLOUD FOR BOTH POSITIVE AND NEGATIVE REVIEWS
     stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
     full_text = ' '.join(positive_df['text'].dropna())
-    cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set, width=800, height=400, repeat=True).generate(full_text)
+    cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='ocean', width=800, height=400, repeat=True).generate(full_text)
     neg_full_text = ' '.join(negative_df['text'].dropna())
-    neg_cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set, width=800, height=400, repeat=True).generate(neg_full_text)
+    neg_cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='CMRmap', width=800, height=400, repeat=True).generate(neg_full_text)
     fig, ax = plt.subplots(1,2)
     ax[0].imshow(cloud_no_stopword, interpolation='bilinear')
     ax[0].axis('off')
@@ -235,7 +236,7 @@ def specific_restaurant():
     distribution_df.rename(columns = {'stars_review':'Count', 'index':'Rating'}, inplace = True)
     
     reviews_cols_star = {'useful': {}}
-    all_ratings = [1, 2, 3, 4, 5]
+    all_ratings = distribution_df['Rating'].tolist()
     for rating in all_ratings:
         rating_df = my_business_df[my_business_df["stars_review"] == rating]
         useful_review = rating_df.reset_index().drop_duplicates(subset=["stars_review"])
@@ -330,7 +331,7 @@ def display_graph(selection="Hello"):
             The 0 label refers to the fact that the restaurant doesnt have a particular facility, as compared to 1 which means it suppports that particular facility")
         #obj.overall_view()
         obj.overall_bar()
-    elif selection == "Your restaurant":
+    elif selection == "Your Restaurant":
         st.title("Analyse your own business!", anchor=CENTER)
         st.markdown('Hello Owner, we are displaying your reviews in the form of wordclouds from both the negative and positive reviews this gives you an idea as to your specific shortcomings and criticisms mentioned by the customers. It also gives you an idea as to what went well so you can continue with those practices. \
             The wordcloud we believe is helpful in highlighting the specific reasonings as to why your restaurant received low/high ratings. \
