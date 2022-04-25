@@ -1,10 +1,10 @@
 from tkinter import CENTER
 from markdown import markdown
-from numpy import int32
+import numpy as np
 import streamlit as st
 import pandas as pd
 import altair as alt
-from wordcloud import WordCloud
+#from wordcloud import WordCloud
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 from sklearn.feature_extraction._stop_words import ENGLISH_STOP_WORDS
@@ -12,7 +12,7 @@ import folium
 from streamlit_folium import folium_static
 import os
 import base64
-from similarity.similarity import *
+from similarity.similarity import * 
 
 from OverallView import overallVis
 
@@ -147,7 +147,7 @@ def generate_map_vis(business_id):
 
     filters = df[filters]
 
-    with st.spinner(text="Filtering Restraunts"):
+    with st.spinner(text="Filtering Restaurant"):
         sw = df[['latitude', 'longitude']].min().values.tolist()
         ne = df[['latitude', 'longitude']].max().values.tolist()
         bounds = [sw,ne]
@@ -159,47 +159,101 @@ merged_df = read_data()
 obj = overallVis()
 
 def welcome_page():
-    if st.checkbox("Show Cleaned Data"):
-        st.write("Cleaning involved splitting data by spaces, combining entires like 'tropical datastorm' that got split redundantly, formatting strings with extra quotes, and for pressure as the storm becomes a Hurricane the pressure drops to lowest possible levels thus we have filled the NaN with 0")
-        st.write(merged_df)
-        st.write(obj.df)
+    st.markdown('<style>' + open('icons.css').read() + '</style>', unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; color: black;'>Let Reviews Take Your Business to the Next Level!</h2>",
+                unsafe_allow_html=True)
+    # st.markdown("![](/Users/malaika/Documents/CMU/Spring22/05-839/final-project-mass-squad/images/review.png)")
+    col1, col2, col3 = st.columns(3)
+    with col2:
+        st.image("images/review.png", width=250)
+
+    col1, col2, col3 = st.columns([1, 5, 1])
+    with col2:
+        st.markdown(
+            "<p> Whether you're a <span style='color: #c21111'> restauranteur </span>, and <span style='color: "
+            "#c21111'> entrepreneur </span> with the next big idea in the food business, "
+            "or just a <span style='color: #c21111'> good 'ol food enthusiast </span> trying to find the best "
+            "fries in town, we've got you "
+            "covered!</p>", unsafe_allow_html=True)
+        st.markdown(
+            "<p> <span class='material-icons'> dinner_dining </span> <span style='color: #c21111'>Restaurant Owners "
+            "</span>, if you're looking for ways to step up your "
+            "game and get better reviews, you're in "
+            "the right place! Study your reviews and ratings over time and checkout what your competition is doing to "
+            "boost their reviews! </p>", unsafe_allow_html=True)
+
+        st.markdown(
+            "<p> <span class='material-icons'> brunch_dining </span>  <span style='color: #c21111'> Looking to start "
+            "a restaurant? </span> Checkout the landscape of "
+            "existing restaurants in your area to see if "
+            "yours will be a good fit! Find out what features of a restaurant work in your neighborhood!</p>",
+            unsafe_allow_html=True)
+
+        st.markdown(
+            "<p> <span class='material-icons'> fastfood </span>  <span style='color: #c21111'> Are you here to just "
+            "find a place to grab a bite? </span> We've got "
+            "your back! Discover the best restaurants in your area and see what fellow foodies have to say about "
+            "it!</p>",
+            unsafe_allow_html=True)
 
 
 def specific_restaurant():
     all_business_ids = merged_df['name'].unique().tolist()
 
-    feature_selectbox = st.selectbox("Select your business_id", all_business_ids)
 
-    # TODO: change to dynamic
-    my_business_df = merged_df[merged_df['name'] == "Matt's Big Breakfast"]
-    #print(my_business_df['name'])
+    '''
+    ## Analyse your business with visualizations!
+    '''
+    feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
 
+    my_business_df = merged_df[merged_df['name'] == feature_selectbox]
 
     ## WORDCLOUD
-    stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
-    full_text = ' '.join(my_business_df['text'].dropna())
-    cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set, width=800, height=400, repeat=True).generate(full_text)
-    plt.imshow(cloud_no_stopword, interpolation='bilinear')
-    plt.axis('off')
+    #stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
+    #full_text = ' '.join(my_business_df['text'].dropna())
+    #cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set, width=800, height=400, repeat=True).generate(full_text)
+    #plt.imshow(cloud_no_stopword, interpolation='bilinear')
+    #plt.axis('off')
     #plt.show()
-    st.set_option('deprecation.showPyplotGlobalUse', False)
-    st.pyplot()
+    #st.set_option('deprecation.showPyplotGlobalUse', False)
+    #st.pyplot()
 
 
     '''
     ## STAR DISTRIBUTION
-    '''
-    df = pd.DataFrame(my_business_df['stars_review'].value_counts(), columns=['stars_review'])
+    '''    
     if st.checkbox("Show Star Rating Count"):
-        st.dataframe(my_business_df['stars_review'].value_counts())
+        df = my_business_df.rename(columns={'stars_review':'Count'})['Count'].value_counts()
+        st.dataframe(df)
     distribution_df = my_business_df['stars_review'].value_counts().reset_index()
+    
+    distribution_df.rename(columns = {'stars_review':'Count', 'index':'Rating'}, inplace = True)
+    
+    reviews_cols_star = {'useful': {}}
+    all_ratings = [1, 2, 3, 4, 5]
+    for rating in all_ratings:
+        rating_df = my_business_df[my_business_df["stars_review"] == rating]
+        useful_review = rating_df.reset_index().drop_duplicates(subset=["stars_review"])
+        reviews_cols_star['useful'][rating] = useful_review['text'].item()
+        
 
+    star_useful = pd.DataFrame.from_dict(reviews_cols_star['useful'].items())
+    
+    star_useful.columns = ['Rating', 'Voted most useful review']
+    
+    star_useful.set_index('Rating', inplace=True)
+    distribution_df.set_index('Rating', inplace=True)
+    
+    distribution_df = distribution_df.join(star_useful.astype(str))
+    distribution_df.reset_index(inplace=True)
+    
     distribution_chart = alt.Chart(distribution_df).mark_bar().encode(
-    y=alt.Y('stars_review', title="Rating Count"),
-    x=alt.X('index:N', title = "Star-rating"),
+    y=alt.Y('Count', title="Rating Count"),
+    x=alt.X('Rating:N', title = "Star-rating"),
+    tooltip=["Count","Voted most useful review"]
     ).properties(
         title="Star Rating Distribution",
-        width=600
+        width=800,height=600
 
     ).interactive()
     st.altair_chart(distribution_chart)
@@ -211,15 +265,48 @@ def specific_restaurant():
     date_df = my_business_df.groupby(my_business_df.date.dt.year).mean()
     if st.checkbox("Show Year-wise Average Star Rating"):
         st.dataframe(date_df['stars_review'])
+    
+    # get best and worst review for each year    
+    all_years = date_df.index.values.tolist()#
+    reviews_cols = {'useful': {}, 'best': {}, 'worst': {}}
+    for year in all_years:
+        year_df = my_business_df[my_business_df["date"].dt.year == year]
+        useful_count = year_df['useful'].max()
+        best_count = year_df['stars_review'].max()
+        worst_count = year_df['stars_review'].min()
+        useful_review = my_business_df[my_business_df['useful'] == useful_count].reset_index().drop_duplicates(subset=["useful"])
+        useful_review['date'] = year
+        best_review = my_business_df[my_business_df['stars_review'] == best_count].reset_index().drop_duplicates(subset=["stars_review"])
+        worst_review = my_business_df[my_business_df['stars_review'] == worst_count].reset_index().drop_duplicates(subset=["stars_review"])
+        reviews_cols['useful'][year] = useful_review['text'].item()
+        reviews_cols['best'][year] = best_review['text'].item()
+        reviews_cols['worst'][year] = worst_review['text'].item()
+
+    most_useful_df = pd.DataFrame.from_dict(reviews_cols['useful'].items())
+    most_useful_df.columns = ['Year', 'Voted most useful review']
+    most_useful_df.set_index('Year', inplace=True)
+    date_df = date_df.join(most_useful_df.astype(str))
+
+    best_df = pd.DataFrame.from_dict(reviews_cols['best'].items())
+    best_df.columns = ['Year', 'Most Positive Review']
+    best_df.set_index('Year', inplace=True)
+    date_df = date_df.join(best_df.astype(str))
+
+    worst_df = pd.DataFrame.from_dict(reviews_cols['worst'].items())
+    worst_df.columns = ['Year', 'Most Negative Review']
+    worst_df.set_index('Year', inplace=True)
+    date_df = date_df.join(worst_df.astype(str))
+
     date_df = date_df.reset_index()
-    #st.line_chart(date_df['stars_review'])
 
     ratings_chart = alt.Chart(date_df).encode(
         x=alt.X('date:T', title="Year"),
         y=alt.Y('stars_review:Q', title = "Average Star rating from Reviews"),
-        tooltip = ['stars_review']
+        tooltip = ['stars_review', 'Voted most useful review', 'Most Positive Review', 'Most Negative Review']
     ).properties(
-        title="Average Star Ratings over Time"
+        title="Average Star Ratings over Time",
+        width=800, 
+        height=400
     )
     st.altair_chart((ratings_chart.mark_line() + ratings_chart.mark_point(filled=True, size=40)).interactive())
 
@@ -248,7 +335,6 @@ def display_graph(selection="Hello"):
     elif selection == "Similarity Check":
         generate_map_vis("MTSW4McQd7CbVtyjqoe9mw") 
     else:
-        st.title('Hello their welcome to our webpage')
         welcome_page()
 
 st.session_state.mask = 'Hello'
