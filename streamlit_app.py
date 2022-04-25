@@ -232,7 +232,14 @@ def display_graph(selection="Hello"):
         selection = st.session_state.menu
     if selection == 'Overall Landscape':
         st.title("Overall Landscape of restaraunts")
-        obj.overall_view()
+        st.markdown("The graphs below give an overview of how each of the categories impact the overall ratings distribution in case of all the restaurants in the dataset. \
+            The ratings described here are mostly binary in terms of whether a restaraunt has a certain facility or not, most cases having a certain facilities leads to a higher rating as compared to not having that. \
+            The distribution of most graphs hover over 4 as the mean. \
+            The overall idea is so that you can compare and contrast the attributes that impact the ratings the most. \
+            We also procide granularity in terms of state and city so you can focus on a specific state and city your restaraunt is based out off. \
+            The 0 label refers to the fact that the restaraunt doesnt have a particular facility, as compared to 1 which means it suppports that particular facility")
+        #obj.overall_view()
+        obj.overall_bar()
     elif selection == "Your Restaraunt":
         specific_restaraunt()
     elif selection == "Similarity Check":
