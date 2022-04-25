@@ -24,7 +24,7 @@ st.markdown(
     """,
     unsafe_allow_html=True)
 
-st.sidebar.image("yelp-logo-vector.png", use_column_width=True, output_format="PNG")
+st.sidebar.image("./images/yelp-logo-vector.png", use_column_width=True, output_format="PNG")
 
 import nltk
 nltk.download('stopwords')
