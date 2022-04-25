@@ -158,10 +158,42 @@ merged_df = read_data()
 obj = overallVis()
 
 def welcome_page():
-    if st.checkbox("Show Cleaned Data"):
-        st.write("Cleaning involved splitting data by spaces, combining entires like 'tropical datastorm' that got split redundantly, formatting strings with extra quotes, and for pressure as the storm becomes a Hurricane the pressure drops to lowest possible levels thus we have filled the NaN with 0")
-        st.write(merged_df)
-        st.write(obj.df)
+    st.markdown('<style>' + open('icons.css').read() + '</style>', unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; color: black;'>Let Reviews Take Your Business to the Next Level!</h2>",
+                unsafe_allow_html=True)
+    # st.markdown("![](/Users/malaika/Documents/CMU/Spring22/05-839/final-project-mass-squad/images/review.png)")
+    col1, col2, col3 = st.columns(3)
+    with col2:
+        st.image("images/review.png", width=250)
+
+    col1, col2, col3 = st.columns([1, 5, 1])
+    with col2:
+        st.markdown(
+            "<p> Whether you're a <span style='color: #c21111'> restauranteur </span>, and <span style='color: "
+            "#c21111'> entrepreneur </span> with the next big idea in the food business, "
+            "or just a <span style='color: #c21111'> good 'ol food enthusiast </span> trying to find the best "
+            "fries in town, we've got you "
+            "covered!</p>", unsafe_allow_html=True)
+        st.markdown(
+            "<p> <span class='material-icons'> dinner_dining </span> <span style='color: #c21111'>Restaurant Owners "
+            "</span>, if you're looking for ways to step up your "
+            "game and get better reviews, you're in "
+            "the right place! Study your reviews and ratings over time and checkout what your competition is doing to "
+            "boost their reviews! </p>", unsafe_allow_html=True)
+
+        st.markdown(
+            "<p> <span class='material-icons'> brunch_dining </span>  <span style='color: #c21111'> Looking to start "
+            "a restaurant? </span> Checkout the landscape of "
+            "existing restaurants in your area to see if "
+            "yours will be a good fit! Find out what features of a restaurant work in your neighborhood!</p>",
+            unsafe_allow_html=True)
+
+        st.markdown(
+            "<p> <span class='material-icons'> fastfood </span>  <span style='color: #c21111'> Are you here to just "
+            "find a place to grab a bite? </span> We've got "
+            "your back! Discover the best restaurants in your area and see what fellow foodies have to say about "
+            "it!</p>",
+            unsafe_allow_html=True)
 
 
 def specific_restaurant():
@@ -302,7 +334,6 @@ def display_graph(selection="Hello"):
     elif selection == "Similarity Check":
         generate_map_vis("MTSW4McQd7CbVtyjqoe9mw") 
     else:
-        st.title('Hello their welcome to our webpage')
         welcome_page()
 
 st.session_state.mask = 'Hello'
