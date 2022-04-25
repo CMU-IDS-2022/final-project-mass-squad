@@ -175,7 +175,7 @@ def specific_restaurant():
     my_business_df = merged_df[merged_df['name'] == feature_selectbox]
     postive_df = my_business_df['stars_review' > 2]
     negative_df = my_business_df['stars_review' < 3]
-    ## WORDCLOUD
+    ## WORDCLOUD FOR BOTH POSITIVE AND NEGATIVE REVIEWS
     stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
     full_text = ' '.join(positive_df['text'].dropna())
     cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set, width=800, height=400, repeat=True).generate(full_text)
