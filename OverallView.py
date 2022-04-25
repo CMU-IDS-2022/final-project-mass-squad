@@ -1,4 +1,6 @@
+from curses import color_pair
 from tkinter import Y
+from turtle import color
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -50,12 +52,12 @@ class overallVis:
                     x=alt.X(feature_selectbox[i], axis=alt.Axis(title=feature_selectbox[i], titleOpacity=0)),
                     y=alt.Y('count():Q', axis=alt.Axis(title='Count')),
                     column=alt.Column('stars', title='Star Ratings'),
-                    color=alt.Color(feature_selectbox[i]),
+                    color = alt.Color(feature_selectbox[i], scale=alt.Scale(scheme='spectral')),
                     tooltip=['count()']
                 ).properties(
                 width=50,
                 height=600,
-                title='Star Ratings vs Attributes'
+                title='Star Ratings vs ' + feature_selectbox[i]
                 ).configure_view(
                     strokeWidth=0, width = 0
                 )
