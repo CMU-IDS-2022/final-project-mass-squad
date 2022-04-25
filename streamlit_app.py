@@ -3,7 +3,7 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 import altair as alt
-#from wordcloud import WordCloud
+from wordcloud import WordCloud
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 from sklearn.feature_extraction._stop_words import ENGLISH_STOP_WORDS
@@ -24,7 +24,7 @@ st.markdown(
     """,
     unsafe_allow_html=True)
 
-st.sidebar.image("./images/yelp-logo-vector.png", use_column_width=True, output_format="PNG")
+st.sidebar.image("yelp-logo-vector.png", use_column_width=True, output_format="PNG")
 
 import nltk
 nltk.download('stopwords')
@@ -167,22 +167,27 @@ def welcome_page():
 def specific_restaurant():
     all_business_ids = merged_df['name'].unique().tolist()
 
-
     '''
     ## Analyse your business with visualizations!
     '''
     feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
 
     my_business_df = merged_df[merged_df['name'] == feature_selectbox]
-
+    postive_df = my_business_df['stars_review' > 2]
+    negative_df = my_business_df['stars_review' < 3]
     ## WORDCLOUD
-    #stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
-    #full_text = ' '.join(my_business_df['text'].dropna())
-    #cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set, width=800, height=400, repeat=True).generate(full_text)
-    #plt.imshow(cloud_no_stopword, interpolation='bilinear')
-    #plt.axis('off')
-    #plt.show()
-    #st.set_option('deprecation.showPyplotGlobalUse', False)
+    stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
+    full_text = ' '.join(positive_df['text'].dropna())
+    cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set, width=800, height=400, repeat=True).generate(full_text)
+    neg_full_text = ' '.join(negative_df['text'].dropna())
+    neg_cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set, width=800, height=400, repeat=True).generate(neg_full_text)
+    fig, ax = plt.subplots(1,2)
+    ax[0].imshow(cloud_no_stopword, interpolation='bilinear')
+    ax[0].axis('off')
+    ax[1].imshow(neg_cloud_no_stopword, interpolation='bilinear')
+    ax[1].axis('off')
+    plt.show()
+    st.set_option('deprecation.showPyplotGlobalUse', False)
     #st.pyplot()
 
 
@@ -284,21 +289,9 @@ def display_graph(selection="Hello"):
         selection = st.session_state.menu
     if selection == 'Overall Landscape':
         st.title("Overall Landscape of restaurants")
-        st.markdown("The graphs below give an overview of how each of the categories impact the overall ratings distribution in case of all the restaurants in the dataset. \
-            The ratings described here are mostly binary in terms of whether a restaurant has a certain facility or not, most cases having a certain facilities leads to a higher rating as compared to not having that. \
-            The distribution of most graphs hover over 4 as the mean. \
-            The overall idea is that you can compare and contrast the attributes that impact the ratings the most. \
-            We also provide granularity in terms of state and city so you can focus on a specific state and city your restaurant is based out off. \
-            The 0 label refers to the fact that the restaurant doesnt have a particular facility, as compared to 1 which means it suppports that particular facility")
-        #obj.overall_view()
-        obj.overall_bar()
-    elif selection == "Your restaurant":
-        st.title(" Analyse your own business!")
-        st.markdown('Using the word cloud from the negative reviews the idea is to relay to the owners the specific shortcomings of their restaurant which they can then improve upon by seeing criticisms mentioned by the customers. \
-            The word cloud would be helpful in highlighting the specific reasonings as to why the restaurant received lower ratings. \
-            Providing it time based granularity gives the restaurant the option to specifically look at what went right and what went wrong during a particular time duration.\
-            We also provide the user with visualizations that enable them to understand what attributes they lack that their competitors with better reviews exhibit as well as what attributes they share with competitors that have worse reviews.')
-        specific_restaurant()
+        obj.overall_view()
+    elif selection == "Your Restaurant":
+        specific_restaraunt()
     elif selection == "Similarity Check":
         generate_map_vis("MTSW4McQd7CbVtyjqoe9mw") 
     else:
@@ -308,8 +301,8 @@ def display_graph(selection="Hello"):
 st.session_state.mask = 'Hello'
 
 selector = st.sidebar.selectbox(
-    "Yelp restaurant Analysis",
-    ("Select One", "Overall Landscape", "Your restaurant", "Similarity Check"),
+    "Yelp Restaurant Analysis",
+    ("Select One", "Overall Landscape", "Your Restaurant", "Similarity Check"),
     on_change=display_graph(),
     key="menu",
 )
