@@ -1,3 +1,4 @@
+from tkinter import CENTER
 from markdown import markdown
 import numpy as np
 import streamlit as st
@@ -158,10 +159,42 @@ merged_df = read_data()
 obj = overallVis()
 
 def welcome_page():
-    if st.checkbox("Show Cleaned Data"):
-        st.write("Cleaning involved splitting data by spaces, combining entires like 'tropical datastorm' that got split redundantly, formatting strings with extra quotes, and for pressure as the storm becomes a Hurricane the pressure drops to lowest possible levels thus we have filled the NaN with 0")
-        st.write(merged_df)
-        st.write(obj.df)
+    st.markdown('<style>' + open('icons.css').read() + '</style>', unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; color: black;'>Let Reviews Take Your Business to the Next Level!</h2>",
+                unsafe_allow_html=True)
+    # st.markdown("![](/Users/malaika/Documents/CMU/Spring22/05-839/final-project-mass-squad/images/review.png)")
+    col1, col2, col3 = st.columns(3)
+    with col2:
+        st.image("images/review.png", width=250)
+
+    col1, col2, col3 = st.columns([1, 5, 1])
+    with col2:
+        st.markdown(
+            "<p> Whether you're a <span style='color: #c21111'> restauranteur </span>, and <span style='color: "
+            "#c21111'> entrepreneur </span> with the next big idea in the food business, "
+            "or just a <span style='color: #c21111'> good 'ol food enthusiast </span> trying to find the best "
+            "fries in town, we've got you "
+            "covered!</p>", unsafe_allow_html=True)
+        st.markdown(
+            "<p> <span class='material-icons'> dinner_dining </span> <span style='color: #c21111'>Restaurant Owners "
+            "</span>, if you're looking for ways to step up your "
+            "game and get better reviews, you're in "
+            "the right place! Study your reviews and ratings over time and checkout what your competition is doing to "
+            "boost their reviews! </p>", unsafe_allow_html=True)
+
+        st.markdown(
+            "<p> <span class='material-icons'> brunch_dining </span>  <span style='color: #c21111'> Looking to start "
+            "a restaurant? </span> Checkout the landscape of "
+            "existing restaurants in your area to see if "
+            "yours will be a good fit! Find out what features of a restaurant work in your neighborhood!</p>",
+            unsafe_allow_html=True)
+
+        st.markdown(
+            "<p> <span class='material-icons'> fastfood </span>  <span style='color: #c21111'> Are you here to just "
+            "find a place to grab a bite? </span> We've got "
+            "your back! Discover the best restaurants in your area and see what fellow foodies have to say about "
+            "it!</p>",
+            unsafe_allow_html=True)
 
 
 def specific_restaurant():
@@ -289,13 +322,24 @@ def display_graph(selection="Hello"):
         selection = st.session_state.menu
     if selection == 'Overall Landscape':
         st.title("Overall Landscape of restaurants")
-        obj.overall_view()
-    elif selection == "Your Restaurant":
-        specific_restaraunt()
+        st.markdown("Hello Owner, The graphs below give an overview of how each of the categories impact the overall ratings distribution in case of all the restaurants in the dataset. \
+            The ratings described here are mostly binary in terms of whether a restaurant has a certain facility or not, most cases having a certain facilities leads to a higher rating as compared to not having that. \
+            The distribution of most graphs hover over 4 as the mean. \
+            The overall idea is that you can compare and contrast the attributes that impact the ratings the most. \
+            We also provide granularity in terms of state and city so you can focus on a specific state and city your restaurant is based out off. \
+            The 0 label refers to the fact that the restaurant doesnt have a particular facility, as compared to 1 which means it suppports that particular facility")
+        #obj.overall_view()
+        obj.overall_bar()
+    elif selection == "Your restaurant":
+        st.title("Analyse your own business!", anchor=CENTER)
+        st.markdown('Hello Owner, we are displaying your reviews in the form of wordclouds from both the negative and positive reviews this gives you an idea as to your specific shortcomings and criticisms mentioned by the customers. It also gives you an idea as to what went well so you can continue with those practices. \
+            The wordcloud we believe is helpful in highlighting the specific reasonings as to why your restaurant received low/high ratings. \
+            Providing it time based granularity gives the you the option to specifically look at what went right and what went wrong during a particular time duration.\
+            We also provide the you with visualizations that enable you to understand what attributes you lack that your competitors with better reviews exhibit as well as what attributes they share with competitors that have worse reviews.')
+        specific_restaurant()
     elif selection == "Similarity Check":
         generate_map_vis("MTSW4McQd7CbVtyjqoe9mw") 
     else:
-        st.title('Hello their welcome to our webpage')
         welcome_page()
 
 st.session_state.mask = 'Hello'
