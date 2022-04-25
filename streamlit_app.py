@@ -1,3 +1,4 @@
+from tkinter import CENTER
 from markdown import markdown
 from numpy import int32
 import streamlit as st
@@ -229,7 +230,7 @@ def display_graph(selection="Hello"):
         selection = st.session_state.menu
     if selection == 'Overall Landscape':
         st.title("Overall Landscape of restaurants")
-        st.markdown("The graphs below give an overview of how each of the categories impact the overall ratings distribution in case of all the restaurants in the dataset. \
+        st.markdown("Hello Owner, The graphs below give an overview of how each of the categories impact the overall ratings distribution in case of all the restaurants in the dataset. \
             The ratings described here are mostly binary in terms of whether a restaurant has a certain facility or not, most cases having a certain facilities leads to a higher rating as compared to not having that. \
             The distribution of most graphs hover over 4 as the mean. \
             The overall idea is that you can compare and contrast the attributes that impact the ratings the most. \
@@ -238,11 +239,11 @@ def display_graph(selection="Hello"):
         #obj.overall_view()
         obj.overall_bar()
     elif selection == "Your restaurant":
-        st.title(" Analyse your own business!")
-        st.markdown('Using the word cloud from the negative reviews the idea is to relay to the owners the specific shortcomings of their restaurant which they can then improve upon by seeing criticisms mentioned by the customers. \
-            The word cloud would be helpful in highlighting the specific reasonings as to why the restaurant received lower ratings. \
-            Providing it time based granularity gives the restaurant the option to specifically look at what went right and what went wrong during a particular time duration.\
-            We also provide the user with visualizations that enable them to understand what attributes they lack that their competitors with better reviews exhibit as well as what attributes they share with competitors that have worse reviews.')
+        st.title("Analyse your own business!", anchor=CENTER)
+        st.markdown('Hello Owner, we are displaying your reviews in the form of wordclouds from both the negative and positive reviews this gives you an idea as to your specific shortcomings and criticisms mentioned by the customers. It also gives you an idea as to what went well so you can continue with those practices. \
+            The wordcloud we believe is helpful in highlighting the specific reasonings as to why your restaurant received low/high ratings. \
+            Providing it time based granularity gives the you the option to specifically look at what went right and what went wrong during a particular time duration.\
+            We also provide the you with visualizations that enable you to understand what attributes you lack that your competitors with better reviews exhibit as well as what attributes they share with competitors that have worse reviews.')
         specific_restaurant()
     elif selection == "Similarity Check":
         generate_map_vis("MTSW4McQd7CbVtyjqoe9mw") 
