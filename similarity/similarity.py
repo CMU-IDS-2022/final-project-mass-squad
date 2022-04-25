@@ -110,4 +110,4 @@ def compare_businesses(df_reviews, df_business, business_id_1, business_id_2):
         width=800, height=400
     )
 
-    st.write(layered_chart)
+    return layered_chart
