@@ -4,8 +4,8 @@ import altair as alt
 
 class overallVis:
     def __init__(self):
-        self.df =  pd.read_csv('data/preprocessed_business.csv', dtype=str)
-        self.df = self.df.drop(columns = ['Unnamed: 0', 'attributes.WiFi'])
+        self.df =  pd.read_csv('data/preprocess_business.csv', dtype=str)
+        self.df = self.df.drop(columns = ['Unnamed: 0'])
         #d = {'true': True, 'false': False}
         #c = {1: True, 0: False}
         #e = {"u'free'" : "'free'", "u'no'" : "'no'", "u'paid'" : "'paid'"}
