@@ -18,6 +18,7 @@ from similarity_viz import *
 from OverallView import overallVis
 business_name = None
 
+os.system("apt install python3-tk")
 st.set_page_config(layout="wide")
 
 st.markdown(
