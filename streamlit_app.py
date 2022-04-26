@@ -16,7 +16,7 @@ from similarity_viz import *
 
 from OverallView import overallVis
 business_name = None
-
+os.system("git lfs pull")
 
 st.set_page_config(layout="wide")
 
