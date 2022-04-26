@@ -49,8 +49,8 @@ def welcome_page():
     st.markdown("<h2 style='text-align: center; color: black;'>Let Reviews Take Your Business to the Next Level!</h2>",
                 unsafe_allow_html=True)
     # st.markdown("![](/Users/malaika/Documents/CMU/Spring22/05-839/final-project-mass-squad/images/review.png)")
-    col1, col2, col3 = st.columns(3)
-    with col2:
+    cols = st.columns(15)
+    with cols[7]:
         st.image("images/review.png", width=250)
 
     col1, col2, col3 = st.columns([1, 5, 1])
@@ -235,7 +235,7 @@ def display_graph(selection="Hello"):
         business_name = specific_restaurant()
     elif selection == "The Competition":
         cols = st.columns([1, 4, 1])
-        cols[1].title("Deep Dive into Your Business!")
+        cols[1].title("Check out the Competition!")
         cols = st.columns([1, 7, 1])
         with cols[1]:
             if business_name == None:
