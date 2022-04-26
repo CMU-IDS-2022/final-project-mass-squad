@@ -13,12 +13,11 @@ from streamlit_folium import folium_static
 import base64
 from similarity.similarity import * 
 from similarity_viz import *
+from install import *
 
 from OverallView import overallVis
 business_name = None
-os.system("apt-get install git-lfs")
-os.system("git lfs install")
-os.system("git lfs pull")
+
 
 st.set_page_config(layout="wide")
 
