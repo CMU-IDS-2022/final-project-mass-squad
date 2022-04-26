@@ -1,6 +1,6 @@
 # CMU Interactive Data Science Final Project
 
-* **Online URL**: https://share.streamlit.io/cmu-ids-2022/final-project-mass-squad/main
+* **Online URL**: https://share.streamlit.io/cmu-ids-2022/final-project-mass-squad/sidharth
 * **Team members**:
   * Contact person: anjadhav@andrew.cmu.edu
   * skathpal@andrew.cmu.edu
