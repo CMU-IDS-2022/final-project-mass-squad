@@ -136,10 +136,12 @@ def generate_map_vis(business_id, df_reviews):
 
     col1, col2, col3 = st.columns([1, 5, 1])
     with col2:
-        st.markdown(
-            "<p> <span class='material-icons'> search </span> You're here because you want to check out the "
-            "competition in your neighborhood! </p>",
-            unsafe_allow_html=True)
+        # st.markdown("<h2 style='text-align: center; color: black;'Deep Dive into Your Business!</h2>",
+        #             unsafe_allow_html=True)
+        # st.markdown(
+        #     "<p> <span class='material-icons'> search </span> You're here because you want to check out the "
+        #     "competition in your neighborhood! </p>",
+        #     unsafe_allow_html=True)
         st.markdown(
             "<p> <span class='material-icons'> storefront </span>Use the visualization below to study restaurants in "
             "your area that are either similar to yours, "

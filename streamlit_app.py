@@ -84,11 +84,12 @@ def welcome_page():
 
 
 def specific_restaurant():
-    cols_1 = st.columns([1, 5, 1])
-    with cols_1[1]:
+    spec_col1, spec_col2, spec_col3 = st.columns([1, 7, 1])
+    with spec_col2:
 
-        st.markdown("<h2 style='text-align: center; color: black;'Deep Dive into Your Business!</h2>",
-                    unsafe_allow_html=True)
+        # st.markdown("<h2 style='text-align: center; color: black;'Deep Dive into Your Business!</h2>",
+                    # unsafe_allow_html=True)
+        st.title("Deep Dive into Your Business!")
         st.markdown(
             "<p> <span class='material-icons'> monitor_heart </span> You're here because you need to check the pulse "
             "of your business. Interested in what your customers have to say about your restaurant? Are they mad that "
@@ -105,9 +106,6 @@ def specific_restaurant():
             "frequently used to describe experiences at your restaurant. Use the histogram and the line graph to "
             "study the distribution of ratings over time! Hover over these plots to see a sample of reviews!</p>",
             unsafe_allow_html=True)
-
-    cols_2 = st.columns([1, 9, 1])
-    with cols_2[1]:
 
         all_business_ids = merged_df['name'].unique().tolist()
 
@@ -236,8 +234,8 @@ def display_graph(selection="Hello"):
     elif selection == "Your Restaurant":
         business_name = specific_restaurant()
     elif selection == "The Competition":
-        st.markdown("<h2 style='text-align: center; color: black;'Deep Dive into Your Business!</h2>",
-                    unsafe_allow_html=True)
+        cols = st.columns([1, 4, 1])
+        cols[1].title("Deep Dive into Your Business!")
         cols = st.columns([1, 7, 1])
         with cols[1]:
             if business_name == None:
