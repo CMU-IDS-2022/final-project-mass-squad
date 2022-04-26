@@ -102,7 +102,7 @@ def specific_restaurant():
     # selected reviews
     st.dataframe(net_df)
     
-    if not positive_df.empty and not negative_df.empty:
+    if not net_df.empty:
     ## WORDCLOUD FOR BOTH POSITIVE AND NEGATIVE REVIEWS
         stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
         full_text = ' '.join(net_df['text'].dropna())
