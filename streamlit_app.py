@@ -20,10 +20,10 @@ business_name = None
 
 st.set_page_config(layout="wide")
 
-st.markdown(
-    """<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    """,
-    unsafe_allow_html=True)
+# st.markdown(
+#     """<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+#     """,
+#     unsafe_allow_html=True)
 
 with st.sidebar:
     col1, col2, col3 = st.columns(3)
@@ -46,7 +46,6 @@ merged_df = read_data()
 obj = overallVis()
 
 def welcome_page():
-    st.markdown('<style>' + open('icons.css').read() + '</style>', unsafe_allow_html=True)
     st.markdown("<h2 style='text-align: center; color: black;'>Let Reviews Take Your Business to the Next Level!</h2>",
                 unsafe_allow_html=True)
     # st.markdown("![](/Users/malaika/Documents/CMU/Spring22/05-839/final-project-mass-squad/images/review.png)")
@@ -85,11 +84,11 @@ def welcome_page():
 
 
 def specific_restaurant():
-    st.markdown('<style>' + open('icons.css').read() + '</style>', unsafe_allow_html=True)
-    st.markdown("<h2 style='text-align: center; color: black;'Deep Dive into Your Business!</h2>",
-                unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([1, 5, 1])
-    with col2:
+    cols_1 = st.columns([1, 5, 1])
+    with cols_1[1]:
+
+        st.markdown("<h2 style='text-align: center; color: black;'Deep Dive into Your Business!</h2>",
+                    unsafe_allow_html=True)
         st.markdown(
             "<p> <span class='material-icons'> monitor_heart </span> You're here because you need to check the pulse "
             "of your business. Interested in what your customers have to say about your restaurant? Are they mad that "
@@ -107,15 +106,11 @@ def specific_restaurant():
             "study the distribution of ratings over time! Hover over these plots to see a sample of reviews!</p>",
             unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 9, 1])
-    with col2:
-
+    cols_2 = st.columns([1, 9, 1])
+    with cols_2[1]:
 
         all_business_ids = merged_df['name'].unique().tolist()
 
-        '''
-        ## Analyse your business with visualizations!
-        '''
         feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
 
         my_business_df = merged_df[merged_df['name'] == feature_selectbox]
@@ -128,7 +123,6 @@ def specific_restaurant():
         # st.dataframe(net_df)
 
         if not net_df.empty:
-        ## WORDCLOUD FOR BOTH POSITIVE AND NEGATIVE REVIEWS
             stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
             full_text = ' '.join(net_df['text'].dropna())
             # negative sentiment
@@ -145,10 +139,6 @@ def specific_restaurant():
         else:
             st.write('No reviews available for one of the word cloud columns please pick one which has reviews')
 
-
-        '''
-        ## STAR DISTRIBUTION
-        '''
         if st.checkbox("Show Star Rating Count"):
             df = my_business_df.rename(columns={'stars_review':'Count'})['Count'].value_counts()
             st.dataframe(df)
@@ -180,14 +170,11 @@ def specific_restaurant():
         tooltip=["Count","Voted most useful review"]
         ).properties(
             title="Star Rating Distribution",
-            width=800,height=600
+            width=600
 
         ).interactive()
         st.altair_chart(distribution_chart)
 
-        '''
-        ## RATING OVER TIME
-        '''
         my_business_df['date'] = pd.to_datetime(my_business_df['date'])
         date_df = my_business_df.groupby(my_business_df.date.dt.year).mean()
         if st.checkbox("Show Year-wise Average Star Rating"):
@@ -232,8 +219,7 @@ def specific_restaurant():
             tooltip = ['stars_review', 'Voted most useful review', 'Most Positive Review', 'Most Negative Review']
         ).properties(
             title="Average Star Ratings over Time",
-            width=800,
-            height=400
+            width=600
         )
         st.altair_chart((ratings_chart.mark_line() + ratings_chart.mark_point(filled=True, size=40)).interactive())
         return feature_selectbox
@@ -241,6 +227,7 @@ def specific_restaurant():
 
 def display_graph(selection="Hello"):
     global business_name
+    st.markdown('<style>' + open('icons.css').read() + '</style>', unsafe_allow_html=True)
     if "menu" in st.session_state:
         selection = st.session_state.menu
     if selection == 'Overall Landscape':
@@ -249,14 +236,14 @@ def display_graph(selection="Hello"):
     elif selection == "Your Restaurant":
         business_name = specific_restaurant()
     elif selection == "The Competition":
-        st.markdown('<style>' + open('icons.css').read() + '</style>', unsafe_allow_html=True)
         st.markdown("<h2 style='text-align: center; color: black;'Deep Dive into Your Business!</h2>",
                     unsafe_allow_html=True)
-
-        if business_name == None:
-            all_business_ids = merged_df['name'].unique().tolist()
-            feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
-            business_name = feature_selectbox
+        cols = st.columns([1, 7, 1])
+        with cols[1]:
+            if business_name == None:
+                all_business_ids = merged_df['name'].unique().tolist()
+                feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
+                business_name = feature_selectbox
         business_id = merged_df[merged_df['name'] == business_name]['business_id'].to_list()[0]
         df_reviews = load_reviews_without_text()
         generate_map_vis(business_id, df_reviews)

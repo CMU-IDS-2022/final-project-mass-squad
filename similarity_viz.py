@@ -29,7 +29,7 @@ def get_filtered_rows(df, df_cat, selected_category, selected_rating, main_id):
     Implement a function that computes which rows of the given dataframe should
     be part of the slice, and returns a boolean pandas Series that indicates 0
     if the row is not part of the slice, and 1 if it is part of the slice.
-    
+
     In the example provided, we assume genders is a list of selected strings
     (e.g. ['Male', 'Transgender']). We then filter the labels based on which
     rows have a value for gender that is contained in this list. You can extend
@@ -52,7 +52,8 @@ def get_filtered_rows(df, df_cat, selected_category, selected_rating, main_id):
 def plot_map(user_row, df, df_reviews, bounds=None):
     base_map = folium.Map(
         location=[user_row['latitude'], user_row['longitude']],
-        tiles='https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=1HxubgB7ToJiUX3kEi7hGfaFJoxPpDwExwEifjbBjcOXE7m0mLsvxzA7McLVTRbf',
+        tiles='https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}{'
+              'r}.png?access-token=1HxubgB7ToJiUX3kEi7hGfaFJoxPpDwExwEifjbBjcOXE7m0mLsvxzA7McLVTRbf',
         attr="Tiles Courtesy of Jawg Maps")
 
     if (bounds is None):
@@ -63,7 +64,7 @@ def plot_map(user_row, df, df_reviews, bounds=None):
     base_map.fit_bounds(bounds)
     main_uid = user_row['business_id']
     for i in range(0, len(df)):
-        if (df.iloc[i]['business_id'] != main_uid):
+        if df.iloc[i]['business_id'] != main_uid:
             popup_content = get_popup_content(main_uid, df.iloc[i], df, df_reviews=df_reviews)
             folium.Marker(
                 location=[df.iloc[i]['latitude'], df.iloc[i]['longitude']],
@@ -144,7 +145,8 @@ def generate_map_vis(business_id, df_reviews):
             "your area that are either similar to yours, "
             "or filter based on features of a business. Similarity scores are calculated based on the cosine "
             "similarity between attributes of you restaurant and every other restaurant in your state. Hover over a "
-            "pin to get comparitive information about the restaurant and  and unlock more comparitive visualizations</p>",
+            "pin to get comparitive information about the restaurant and  and unlock more comparitive "
+            "visualizations</p>",
             unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns([1, 7, 1])
@@ -174,7 +176,7 @@ def generate_map_vis(business_id, df_reviews):
         filters = get_filtered_rows(df, df_cat, selected_category, selected_rating, business_id)
         filters = df[filters]
 
-        if (len(filters) == 0 or business_id not in filters['business_id'].to_list()):
+        if len(filters) == 0 or business_id not in filters['business_id'].to_list():
             filters = pd.concat([user_row_raw, filters])
 
         with st.spinner(text="Filtering Restaurant"):
