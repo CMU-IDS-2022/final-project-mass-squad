@@ -1,6 +1,4 @@
 import os
-os.system("apt install python3-tk")
-
 from tkinter import CENTER
 from markdown import markdown
 import numpy as np
