@@ -1,3 +1,6 @@
+import os
+os.system("apt install python3-tk")
+
 from tkinter import CENTER
 from markdown import markdown
 import numpy as np
@@ -10,7 +13,6 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction._stop_words import ENGLISH_STOP_WORDS
 import folium
 from streamlit_folium import folium_static
-import os
 import base64
 from similarity.similarity import * 
 from similarity_viz import *
@@ -18,7 +20,7 @@ from similarity_viz import *
 from OverallView import overallVis
 business_name = None
 
-os.system("apt install python3-tk")
+
 st.set_page_config(layout="wide")
 
 st.markdown(
