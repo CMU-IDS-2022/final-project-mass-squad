@@ -65,22 +65,16 @@ def get_exclusive_attrs(business_id_1, business_id_2, business_df):
 
 
 def compare_businesses(df_reviews, df_business, business_id_1, business_id_2):
-    business_subset = df_reviews[df_reviews.business_id.isin([business_id_1, business_id_2])][['business_id', 'stars', 'date']]
-    business_subset['date'] = pd.to_datetime(business_subset['date'])
-    business_subset = business_subset.groupby(
-        [business_subset.business_id, business_subset.date.dt.year]).mean().reset_index()
-    business_subset = business_subset.rename(columns={"stars": "avg_stars"})
-
+    business_subset = df_reviews[df_reviews.business_id.isin([business_id_1, business_id_2])][['business_id', 'avg_stars', 'date']]
     business_subset = business_subset.merge(df_business, on="business_id", how="left")
 
     legend_selection = alt.selection_multi(fields=['name'], bind='legend')
-
     lines = alt.Chart(business_subset).mark_line().encode(
         alt.X('date:T', axis=alt.Axis(title='Date')),
         alt.Y('avg_stars:Q'),
         alt.Color('name:N'),
         opacity=alt.condition(legend_selection, alt.value(1), alt.value(0.1)),
-    ).properties(title="Compare your Ratings to Your Competitors over Time")
+    ).properties(title="Comparison of Your Ratings with Your Competitors over Time")
 
     nearest_selector = alt.selection(type='single', nearest=True, on='mouseover',
                                      fields=['date'], empty='none')
@@ -107,7 +101,7 @@ def compare_businesses(df_reviews, df_business, business_id_1, business_id_2):
     ).add_selection(
         legend_selection
     ).properties(
-        width=800, height=400
+        width=400, height=300
     )
 
     return layered_chart
