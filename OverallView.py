@@ -1,3 +1,6 @@
+from curses import color_pair
+from tkinter import Y
+from turtle import color
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -15,6 +18,51 @@ class overallVis:
     
     def vis_draw(self):
         return self.df.head()
+
+    def overall_bar(self):
+        data = self.df
+        all_keys = data.keys().to_list()
+        list_of_attributes = []
+        for i in range(len(all_keys)):
+            if 'attributes' in all_keys[i]:
+                list_of_attributes.append(all_keys[i])
+
+        parameter_name_lookup = dict()
+        rename = dict()
+        for i in range(len(list_of_attributes)):
+            text = list_of_attributes[i].split('.')[1]
+            parameter_name_lookup[text] = list_of_attributes[i]
+            rename[list_of_attributes[i]] = text
+        state_selectbox = st.multiselect("Select states to narrow your search area", data['state'].unique())
+        if len(state_selectbox) != 0:
+            data = data[data['state'].isin(state_selectbox)]
+        city_selectbox = st.multiselect("Select city to narrow your search area", data['city'].unique())
+        if len(city_selectbox) != 0:
+            data = data[data['city'].isin(city_selectbox)]
+        if data.empty:
+            st.write('The selections made for City and State don\'t having any ratings data available, please reselect the values that have more than 1 value, Thank You')
+        else:
+            feature_selectbox = st.multiselect("Select visualisation paramter", parameter_name_lookup.keys(), default='WiFi')
+            data.rename(columns=rename, inplace=True)
+            attributes = ['stars'] + feature_selectbox
+            new_data = data[attributes]
+            for i in range(len(feature_selectbox)):
+                df = new_data#[new_data[feature_selectbox[i] == None]]
+                progression_chart = alt.Chart(df).mark_bar().encode(
+                    x=alt.X(feature_selectbox[i], axis=alt.Axis(title=feature_selectbox[i], titleOpacity=0)),
+                    y=alt.Y('count():Q', axis=alt.Axis(title='Count')),
+                    column=alt.Column('stars', title='Star Ratings'),
+                    color = alt.Color(feature_selectbox[i], scale=alt.Scale(scheme='spectral')),
+                    tooltip=['count()']
+                ).properties(
+                width=50,
+                height=600,
+                title='Star Ratings vs ' + feature_selectbox[i]
+                ).configure_view(
+                    strokeWidth=0, width = 0
+                )
+                st.write(progression_chart)
+
 
     def overall_view(self):
         data = self.df
