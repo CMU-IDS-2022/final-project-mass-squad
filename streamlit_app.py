@@ -25,7 +25,10 @@ st.markdown(
     """,
     unsafe_allow_html=True)
 
-st.sidebar.image("yelp-logo-vector.png", use_column_width=True, output_format="PNG")
+with st.sidebar:
+    col1, col2, col3 = st.columns(3)
+    with col2:
+        st.image("images/restaurant.png", width=90, output_format="PNG")
 
 import nltk
 nltk.download('stopwords')
@@ -210,14 +213,7 @@ def display_graph(selection="Hello"):
     if "menu" in st.session_state:
         selection = st.session_state.menu
     if selection == 'Overall Landscape':
-        st.title("Overall Landscape of restaurants")
-        st.markdown("Hello Owner, The graphs below give an overview of how each of the categories impact the overall ratings distribution in case of all the restaurants in the dataset. \
-            The ratings described here are mostly binary in terms of whether a restaurant has a certain facility or not, most cases having a certain facilities leads to a higher rating as compared to not having that. \
-            The distribution of most graphs hover over 4 as the mean. \
-            The overall idea is that you can compare and contrast the attributes that impact the ratings the most. \
-            We also provide granularity in terms of state and city so you can focus on a specific state and city your restaurant is based out off. \
-            The 0 label refers to the fact that the restaurant doesnt have a particular facility, as compared to 1 which means it suppports that particular facility")
-        #obj.overall_view()
+        obj.write_text()
         obj.overall_bar()
     elif selection == "Your Restaurant":
         st.title("Analyse your own business!", anchor=CENTER)
@@ -225,6 +221,7 @@ def display_graph(selection="Hello"):
             The wordcloud we believe is helpful in highlighting the specific reasonings as to why your restaurant received low/high ratings. \
             Providing it time based granularity gives the you the option to specifically look at what went right and what went wrong during a particular time duration.\
             We also provide the you with visualizations that enable you to understand what attributes you lack that your competitors with better reviews exhibit as well as what attributes they share with competitors that have worse reviews.')
+
         business_name = specific_restaurant()
     elif selection == "Similarity Check":
         if business_name == None:
@@ -233,15 +230,20 @@ def display_graph(selection="Hello"):
             business_name = feature_selectbox
         business_id = merged_df[merged_df['name'] == business_name]['business_id'].to_list()[0]
         print(business_id)
-        generate_map_vis(business_id) 
+        generate_map_vis(business_id)
+        specific_restaurant()
+    elif selection == "The Competition":
+        generate_map_vis("MTSW4McQd7CbVtyjqoe9mw")
+    elif selection == "Home":
+        welcome_page()
     else:
         welcome_page()
 
 st.session_state.mask = 'Hello'
 
 selector = st.sidebar.selectbox(
-    "Yelp Restaurant Analysis",
-    ("Home", "Overall Landscape", "Your Restaurant", "Similarity Check"),
+    "",
+    ("Home", "Overall Landscape", "Your Restaurant", "The Competition"),
     on_change=display_graph(),
     key="menu",
 )
