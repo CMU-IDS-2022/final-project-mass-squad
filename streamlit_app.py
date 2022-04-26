@@ -1,5 +1,5 @@
 import os
-os.system("apt install python3-tk")
+os.system("sudo apt install python3-tk")
 from markdown import markdown
 import numpy as np
 import streamlit as st
