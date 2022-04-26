@@ -40,7 +40,7 @@ def read_data():
 
 @st.cache
 def load_reviews_without_text():
-    return pd.read_csv("data/preprocess_reviews_no_text.csv")
+    return pd.read_csv("data/preprocess_reviews.csv")
 
 merged_df = read_data()
 obj = overallVis()
@@ -102,7 +102,7 @@ def specific_restaurant():
             unsafe_allow_html=True)
 
         st.markdown(
-            "<p> <<span class='material-icons'> rate_review </span> Use the wordcloud to understand what words are "
+            "<p> <span class='material-icons'> rate_review </span> Use the wordcloud to understand what words are "
             "frequently used to describe experiences at your restaurant. Use the histogram and the line graph to "
             "study the distribution of ratings over time! Hover over these plots to see a sample of reviews!</p>",
             unsafe_allow_html=True)
@@ -249,6 +249,10 @@ def display_graph(selection="Hello"):
     elif selection == "Your Restaurant":
         business_name = specific_restaurant()
     elif selection == "The Competition":
+        st.markdown('<style>' + open('icons.css').read() + '</style>', unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center; color: black;'Deep Dive into Your Business!</h2>",
+                    unsafe_allow_html=True)
+
         if business_name == None:
             all_business_ids = merged_df['name'].unique().tolist()
             feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)

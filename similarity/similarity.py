@@ -65,16 +65,10 @@ def get_exclusive_attrs(business_id_1, business_id_2, business_df):
 
 
 def compare_businesses(df_reviews, df_business, business_id_1, business_id_2):
-    business_subset = df_reviews[df_reviews.business_id.isin([business_id_1, business_id_2])][['business_id', 'stars', 'date']]
-    business_subset['date'] = pd.to_datetime(business_subset['date'])
-    business_subset = business_subset.groupby(
-        [business_subset.business_id, business_subset.date.dt.year]).mean().reset_index()
-    business_subset = business_subset.rename(columns={"stars": "avg_stars"})
-
+    business_subset = df_reviews[df_reviews.business_id.isin([business_id_1, business_id_2])][['business_id', 'avg_stars', 'date']]
     business_subset = business_subset.merge(df_business, on="business_id", how="left")
 
     legend_selection = alt.selection_multi(fields=['name'], bind='legend')
-
     lines = alt.Chart(business_subset).mark_line().encode(
         alt.X('date:T', axis=alt.Axis(title='Date')),
         alt.Y('avg_stars:Q'),
