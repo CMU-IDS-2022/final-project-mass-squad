@@ -16,8 +16,9 @@ from similarity_viz import *
 
 from OverallView import overallVis
 business_name = None
-#os.system("git lfs install")
-#os.system("git lfs pull")
+os.system("sudo apt-get install git-lfs")
+os.system("git lfs install")
+os.system("git lfs pull")
 
 st.set_page_config(layout="wide")
 
