@@ -1,5 +1,4 @@
 from curses import color_pair
-from turtle import color
 import streamlit as st
 import pandas as pd
 import altair as alt
