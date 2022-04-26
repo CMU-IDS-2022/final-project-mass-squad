@@ -248,7 +248,7 @@ def display_graph(selection="Hello"):
         obj.overall_bar()
     elif selection == "Your Restaurant":
         business_name = specific_restaurant()
-    elif selection == "Explore Similar Businesses":
+    elif selection == "The Competition":
         if business_name == None:
             all_business_ids = merged_df['name'].unique().tolist()
             feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
