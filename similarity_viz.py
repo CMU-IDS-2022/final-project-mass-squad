@@ -1,4 +1,3 @@
-from tkinter import CENTER
 from markdown import markdown
 import numpy as np
 import streamlit as st
