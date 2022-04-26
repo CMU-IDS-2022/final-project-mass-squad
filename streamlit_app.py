@@ -34,7 +34,7 @@ import nltk
 nltk.download('stopwords')
 @st.cache
 def read_data():
-    merged_df = pd.read_csv('data/merged_reviews.csv')
+    merged_df = pd.read_csv('data/merged_reviews_polarity.csv')
     return merged_df
 
 
@@ -94,24 +94,29 @@ def specific_restaurant():
     feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
 
     my_business_df = merged_df[merged_df['name'] == feature_selectbox]
-    positive_df = my_business_df[my_business_df['stars_review'] > 3]
-    negative_df = my_business_df[my_business_df['stars_review'] < 2.5]
-    #print(positive_df, negative_df)
+
+    sentiment_range = st.slider('Select the sentiment range you wish to explore', -1.0, 1.0, (-0.5, 0.5))
+    # wordcloud based on sentiment
+    net_df = my_business_df[my_business_df['polarity'] > sentiment_range[0]]
+    net_df = net_df[net_df['polarity'] < sentiment_range[1]]
+    # selected reviews
+    st.dataframe(net_df)
+    
     if not positive_df.empty and not negative_df.empty:
     ## WORDCLOUD FOR BOTH POSITIVE AND NEGATIVE REVIEWS
         stopword_set = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
-        full_text = ' '.join(positive_df['text'].dropna())
-        cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='Greens', width=800, height=400, repeat=True).generate(full_text)
-        neg_full_text = ' '.join(negative_df['text'].dropna())
-        neg_cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='Reds', width=800, height=400, repeat=True).generate(neg_full_text)
-        fig, ax = plt.subplots(1,2)
-        ax[0].imshow(cloud_no_stopword, interpolation='bilinear')
-        ax[0].axis('off')
-        ax[1].imshow(neg_cloud_no_stopword, interpolation='bilinear')
-        ax[1].axis('off')
+        full_text = ' '.join(net_df['text'].dropna())
+        # negative sentiment
+        if sentiment_range[1] < 0.5:
+            cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='Reds', width=800, height=400, repeat=True).generate(full_text)
+        # positive sentiment
+        else:
+            cloud_no_stopword = WordCloud(background_color='white', stopwords=stopword_set,colormap='Greens', width=800, height=400, repeat=True).generate(full_text)
+        plt.imshow(cloud_no_stopword, interpolation='bilinear')
+        plt.axis('off')
         plt.show()
         st.set_option('deprecation.showPyplotGlobalUse', False)
-        st.pyplot()
+        #st.pyplot()
     else:
         st.write('No reviews available for one of the word cloud columns please pick one which has reviews')
 
