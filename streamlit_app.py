@@ -224,17 +224,16 @@ def display_graph(selection="Hello"):
             We also provide the you with visualizations that enable you to understand what attributes you lack that your competitors with better reviews exhibit as well as what attributes they share with competitors that have worse reviews.')
 
         business_name = specific_restaurant()
-    elif selection == "Similarity Check":
+    elif selection == "Explore Similar Businesses":
         if business_name == None:
             all_business_ids = merged_df['name'].unique().tolist()
             feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
             business_name = feature_selectbox
         business_id = merged_df[merged_df['name'] == business_name]['business_id'].to_list()[0]
-        print(business_id)
-        generate_map_vis(business_id)
+        df_reviews = load_reviews_without_text()
+        generate_map_vis(business_id, df_reviews)
         specific_restaurant()
-    elif selection == "The Competition":
-        generate_map_vis("MTSW4McQd7CbVtyjqoe9mw")
+    
     elif selection == "Home":
         welcome_page()
     else:
