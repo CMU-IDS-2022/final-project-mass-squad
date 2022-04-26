@@ -49,8 +49,8 @@ def welcome_page():
     st.markdown("<h2 style='text-align: center; color: black;'>Let Reviews Take Your Business to the Next Level!</h2>",
                 unsafe_allow_html=True)
     # st.markdown("![](/Users/malaika/Documents/CMU/Spring22/05-839/final-project-mass-squad/images/review.png)")
-    cols = st.columns(15)
-    with cols[7]:
+    cols = st.columns(3)
+    with cols[1]:
         st.image("images/review.png", width=250)
 
     col1, col2, col3 = st.columns([1, 5, 1])
