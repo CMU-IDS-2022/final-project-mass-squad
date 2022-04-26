@@ -1,5 +1,4 @@
 from curses import color_pair
-from tkinter import Y
 from turtle import color
 import streamlit as st
 import pandas as pd
