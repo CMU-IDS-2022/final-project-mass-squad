@@ -85,6 +85,7 @@ def welcome_page():
 
 
 def specific_restaurant():
+    print(merged_df)
     all_business_ids = merged_df['name'].unique().tolist()
 
     '''
@@ -216,7 +217,7 @@ def display_graph(selection="Hello"):
         obj.write_text()
         obj.overall_bar()
     elif selection == "Your Restaurant":
-        st.title("Analyse your own business!", anchor=CENTER)
+        st.title("Analyse your own business!")
         st.markdown('Hello Owner, we are displaying your reviews in the form of wordclouds from both the negative and positive reviews this gives you an idea as to your specific shortcomings and criticisms mentioned by the customers. It also gives you an idea as to what went well so you can continue with those practices. \
             The wordcloud we believe is helpful in highlighting the specific reasonings as to why your restaurant received low/high ratings. \
             Providing it time based granularity gives the you the option to specifically look at what went right and what went wrong during a particular time duration.\
