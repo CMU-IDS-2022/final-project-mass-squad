@@ -224,7 +224,7 @@ def display_graph(selection="Hello"):
             We also provide the you with visualizations that enable you to understand what attributes you lack that your competitors with better reviews exhibit as well as what attributes they share with competitors that have worse reviews.')
 
         business_name = specific_restaurant()
-    elif selection == "Explore Similar Businesses":
+    elif selection == "The Competition":
         if business_name == None:
             all_business_ids = merged_df['name'].unique().tolist()
             feature_selectbox = st.selectbox("Select the name of your business", all_business_ids)
