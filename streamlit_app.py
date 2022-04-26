@@ -232,7 +232,7 @@ def display_graph(selection="Hello"):
         business_id = merged_df[merged_df['name'] == business_name]['business_id'].to_list()[0]
         df_reviews = load_reviews_without_text()
         generate_map_vis(business_id, df_reviews)
-        specific_restaurant()
+        #specific_restaurant()
     
     elif selection == "Home":
         welcome_page()
