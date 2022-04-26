@@ -1,3 +1,4 @@
+from tkinter import CENTER
 from markdown import markdown
 import numpy as np
 import streamlit as st
@@ -12,8 +13,6 @@ from similarity.similarity import *
 
 
 PHOTO_DIR = "./data/yelp_photos/photos/"
-
-
 
 @st.cache
 def load_data():
@@ -51,9 +50,9 @@ def get_filtered_rows(df, df_cat, selected_category, selected_rating, main_id):
     return labels
 
 
-def plot_map(user_row, df, bounds = None):
+def plot_map(user_row, df, df_reviews, bounds = None):
     base_map = folium.Map(
-    location=[user_row['latitude'], user_row['longitude']],height='100%', width = '100%',
+    location=[user_row['latitude'], user_row['longitude']],
     tiles='https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=1HxubgB7ToJiUX3kEi7hGfaFJoxPpDwExwEifjbBjcOXE7m0mLsvxzA7McLVTRbf',
     attr="Tiles Courtesy of Jawg Maps")
 
@@ -67,7 +66,7 @@ def plot_map(user_row, df, bounds = None):
     for i in range(0,len(df)):
         if(df.iloc[i]['business_id'] != main_uid):
        
-            popup_content = get_popup_content(main_uid, df.iloc[i], df)   
+            popup_content = get_popup_content(main_uid, df.iloc[i], df, df_reviews = df_reviews)   
             folium.Marker(
                 location=[df.iloc[i]['latitude'], df.iloc[i]['longitude']],
                 tooltip="<b>"+df.iloc[i]['name']+"</b>",
@@ -84,8 +83,8 @@ def plot_map(user_row, df, bounds = None):
 
     return base_map
 
-def get_popup_content(main_uid, row, df, mine=False): 
-    
+def get_popup_content(main_uid, row, df, mine=False, df_reviews = None): 
+ 
     if(mine):
         content = "<h2>Your Restaurant!</h2>"
     else:
@@ -111,7 +110,7 @@ def get_popup_content(main_uid, row, df, mine=False):
                 content = content + "<li>" + str(ea) + "</li>"
             content = content + "</ul>"
 
-        content = content +  "<br><br><button onclick='myFunction()'>View Detailed Comparison</button>"
+        content = content +  "<br><br><button onclick='myFunction()'>View Detailed Comparison</button><br><br>"
         content = content +  """<script>
                                         function myFunction() {
                                             var x = document.getElementById("vis");
@@ -123,39 +122,41 @@ def get_popup_content(main_uid, row, df, mine=False):
                                         }
                                     </script>"""
         
-        vis = alt.Chart(df[:10]).mark_bar().encode(
-            x=alt.X('postal_code'),
-            y=alt.Y('stars')
-        )            
+        # vis = alt.Chart(df[:10]).mark_bar().encode(
+        #     x=alt.X('postal_code'),
+        #     y=alt.Y('stars')
+        # )       
+        vis = compare_businesses(df_reviews, df, main_uid, row['business_id'])     
         a = vis.to_html()
         a = a.replace('<div id="vis">','<div id="vis" style="display:none">')
         content = a.replace('<body>','<body>'+content)
         
 
-    iframe = folium.IFrame(content, width=400, height=400)
+    iframe = folium.IFrame(content, width=550, height=400)
     popup = folium.Popup(iframe)
     return popup
   
   
 
-def generate_map_vis(business_id):
+def generate_map_vis(business_id, df_reviews):
 
     st.title("Map Plot of Competitor Yelp Restaurants")
     with st.spinner(text="Loading data..."):
         busi = load_data()
+        
 
-    user_row = busi[busi['business_id']==business_id]
-    user_row = user_row.iloc[0]
+    user_row_raw = busi[busi['business_id']==business_id]
+    user_row = user_row_raw.iloc[0]
     filter_option = st.radio("Compare To: ",["Similar Businesses in State","Businesses in the Same City"], index = 1)
 
     if(filter_option == "Similar Businesses in State"):
         df = similarity(business_id, busi, 50)
+        
     else:
         CITY=user_row["city"]
         df = busi[busi["city"]==CITY][:50]
 
-    if(business_id not in df['business_id'].to_list()):
-        df = pd.concat([df,user_row])
+    
 
     df_cat = df[['business_id','categories']]
     df_cat['categories'] = df_cat['categories'].str.split(",")
@@ -170,9 +171,13 @@ def generate_map_vis(business_id):
     filters = get_filtered_rows(df, df_cat, selected_category, selected_rating,business_id)
     filters = df[filters]
 
+    if(len(filters)==0 or business_id not in filters['business_id'].to_list()):
+        filters = pd.concat([user_row_raw, filters])
+      
+
     with st.spinner(text="Filtering Restaurant"):
         sw = df[['latitude', 'longitude']].min().values.tolist()
         ne = df[['latitude', 'longitude']].max().values.tolist()
         bounds = [sw,ne]
-        base_map = plot_map(user_row, filters, bounds = bounds)
+        base_map = plot_map(user_row, filters, df_reviews, bounds = bounds)
         folium_static(base_map)

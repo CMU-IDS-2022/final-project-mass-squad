@@ -80,7 +80,7 @@ def compare_businesses(df_reviews, df_business, business_id_1, business_id_2):
         alt.Y('avg_stars:Q'),
         alt.Color('name:N'),
         opacity=alt.condition(legend_selection, alt.value(1), alt.value(0.1)),
-    ).properties(title="Compare your Ratings to Your Competitors over Time")
+    ).properties(title="Comparison of Your Ratings with Your Competitors over Time")
 
     nearest_selector = alt.selection(type='single', nearest=True, on='mouseover',
                                      fields=['date'], empty='none')
@@ -107,7 +107,7 @@ def compare_businesses(df_reviews, df_business, business_id_1, business_id_2):
     ).add_selection(
         legend_selection
     ).properties(
-        width=800, height=400
+        width=400, height=300
     )
 
     return layered_chart
