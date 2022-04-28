@@ -1,9 +1,10 @@
 # Final Project Report
 
 **Project URL**: https://share.streamlit.io/cmu-ids-2022/final-project-mass-squad/sidharth
-**Video URL**: TODO
 
-Short (~250 words) abstract of the concrete data science problem and how the solutions addresses the problem.
+**Video URL**: https://drive.google.com/file/d/1bTqD6tvRUv3YvHJ8fSDqaEm1GztDpX_Y/view?usp=sharing 
+
+With the evolution of companies such as Doordash and Uber Eats, customers have a wide gamut of choices of restaurants at their fingertips with handy access to millions of reviews and ratings and cuisines. It is very easy for customers to filter by locality, cuisines and ratings to shortlist a restaurant to visit or order from. Given such wide options, restaurants need to ramp up their amenities and food offerings in order to get more favourable reviews and ratings and attract even more customers. In this situation, they have little options to analyze salient aspects of their business, find out what is lacking and what else can be improved. Moreover, for newbies in the restaurant industry, there are limited avenues for comprehensively analyzing the industry’s landscape and making decisions about what cuisines to serve or what amenities to offer. Motivate by this lack of a comprehensive analysis tools for restaurant owner’s we develop this application that processes millions of yelp restaurant reviews, ratings and attributes and offers an array of interactive visualizations to aid restaurant owners make the right decisions for their business. 
 
 ## Introduction
 
@@ -53,7 +54,32 @@ To identify similar businesses, we compute the cosine similarity between the bin
 
 ## Results
 
-Our final app can provide - a holistic view of the general restaurant trends that lead to good ratings, a comprehensive overview of the reviews any particular restaruant has garnered over the years and a detailed comparative analysis with restaurants in the same neighborhood. There were various fascinating results we discovered through our visualisations. We found that the Overall Landscape page can allow business owners understand important attributes that matter to their targetted demographic and channelize their resources in a strategic manner. For instance, while studying WiFi related trends in Philidalphia, we found that restaurants without free WiFi garnered twice as many positive ratings (> 3) as those without one. This seems to be counterintuitive at first but can only imply that the concerned demographic isn’t weighing in on WiFi facilities too much while judging their restaurant experience. Another major problem that our app aims to alleviate is analysis of reviews overtime through the Your Restaruant section. In the wordcloud section, the default range for the sentiment slider was set to -0.5 to 0.5 as we believe such a range can allow an insightful analysis while avoiding extreme sentiments. 
+Our final app can provide a holistic view of the general restaurant trends that lead to good ratings, a comprehensive overview of the reviews any particular restaurant has garnered over the years and a detailed comparative analysis with restaurants in the same neighborhood and with similar attributes. This application caters to a wide range of audiences from users who own a restaurant to those who wish to get into this business and are exploring various restaurant ideas and good- t-have amenities for a successful business. The various visualizations we provide ways for explorations along multiple dimensions. For example, the Overall Landscape page can allow business owners understand important attributes that matter to their targetted demographic and channelize their resources in a strategic manner. It could help newbies in the restaurant business gain a sense of what amentities will best cater to their audiences and try to incorporate them while planning for a new restaurant release. For instance, while studying WiFi related trends in Philidalphia, we found that restaurants without free WiFi garnered twice as many positive ratings (> 3) as those without one. This seems to be counterintuitive at first but can only imply that the concerned demographic isn’t weighing in on WiFi facilities too much while judging their restaurant experience. 
+
+![Wifi](./images/wifi.png?raw=true)
+
+Another major problem that our app aims to alleviate is analysis of reviews overtime through the Your Restaurant section. In the wordcloud visualization, the default range for the sentiment slider was set to -0.5 to 0.5 as we believe such a range can allow an insightful analysis while avoiding extreme sentiments. For any particular restaurant, a dynamically rendered wordcloud enhances the user experience and is a great way to obtain a gist of all the reviews received so far. It helps existing restaurant owners get a quick glimpse of the good areas and pain points of their restaurants.
+
+![Word Cloud](./images/word_cloud1.png?raw=true)
+
+The star rating histogram further divides these reviews into relevant bins where as the line chart expressing the change in star rating highlights performance over the years. These two charts allow the user to gain broad overview of the business and complement the insights gained from the wordcloud. An interesting case of this is the restaurant named  Sonic Drive-In, it is evident that the restaurant has been performing poorly with a majority of the reviews beeing 1-stars. The line chart depicts that through 2014-2018 the ratings have been consistently falling but have been picking up for the last three years. This might imply that some recent changes in their order processing has worked in their favor. To gain further insights on this positive sentiment, we dialed the sentiment of the wordcloud to be in the range 0 to 1. This wordcloud highlighted words like “order” and “time”, since this period from 2019 to 2021 has been heavily affected by COVID, it must mean the restaurant has been quick to adapt to the pandemic induced spike in home-deliveries. 
+
+![Graphs](./images/graphs.png?raw=true)
+
+![Word Cloud](./images/word_cloud2.png?raw=true)
+
+
+Finally, the restaurant owners can get further ideas about potential improvements to their restaurant by analyzing how their competitors are performing and what unique amentities they offer that their restaurant lacks. For example, the ‘St Honore Pastries’ restaurant owner in Philadelphia can either choose to analyze all other restaurants in the city of Philadelphia and then add in custom filters on the type of the restaurant and their star ratings or they can choose to view all restaurants in the state of Pennsylvania that have similar attributes to their particular restaurant. Say ‘St Honore Pastries’ chooses to view all other Bakeries and Cafes in Philadelphia that have a rating higher than 4. 
+
+![Map](./images/map1.png?raw=true)
+
+Then they can click on the tooltip of any particular restaurant to reveal details about that business such such their average rating, their kinds of foods/drinks they offer, their top reviews. This views also shows attributes of the other restaurant that this business lacks and can be potentially provided to the customers to bolster favourable sentiment.
+
+![Map](./images/map2.png?raw=true)
+
+This view further allows for a more detailed comparison of the trend of average ratings of the chosen and user’s restaurant over the years to show how these businesses have evolved.
+
+![Map](./images/map3.png?raw=true)
 
 ## Discussion
 
