@@ -8,6 +8,13 @@ parser.add_argument("--business-file", type=str)
 
 
 def filter(in_file, out_file, business_ids):
+    """
+    Retain only those reviews that correspond to businesses included in the cleaned business file
+    :param in_file: the raw reviews file
+    :param out_file: the file to which the cleaned reviews file must be written
+    :param business_ids: the  business ids included in the cleaned business file
+    :return: the cleaned reviews file
+    """
     header = 1
     pruned_file = out_file
     for chunk in pd.read_json(in_file, chunksize=1000, lines=True):
