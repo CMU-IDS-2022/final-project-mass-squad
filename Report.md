@@ -1,9 +1,9 @@
 # Final Project Report
 
 **Project URL**: https://share.streamlit.io/cmu-ids-2022/final-project-mass-squad/sidharth
-**Video URL**: TODO
+**Video URL**: https://drive.google.com/file/d/1bTqD6tvRUv3YvHJ8fSDqaEm1GztDpX_Y/view?usp=sharing 
 
-Short (~250 words) abstract of the concrete data science problem and how the solutions addresses the problem.
+With the evolution of companies such as Doordash and Uber Eats, customers have a wide gamut of choices of restaurants at their fingertips with handy access to millions of reviews and ratings and cuisines. It is very easy for customers to filter by locality, cuisines and ratings to shortlist a restaurant to visit or order from. Given such wide options, restaurants need to ramp up their amenities and food offerings in order to get more favourable reviews and ratings and attract even more customers. In this situation, they have little options to analyze salient aspects of their business, find out what is lacking and what else can be improved. Moreover, for newbies in the restaurant industry, there are limited avenues for comprehensively analyzing the industry’s landscape and making decisions about what cuisines to serve or what amenities to offer. Motivate by this lack of a comprehensive analysis tools for restaurant owner’s we develop this application that processes millions of yelp restaurant reviews, ratings and attributes and offers an array of interactive visualizations to aid restaurant owners make the right decisions for their business. 
 
 ## Introduction
 
@@ -53,7 +53,9 @@ To identify similar businesses, we compute the cosine similarity between the bin
 
 ## Results
 
-Our final app can provide - a holistic view of the general restaurant trends that lead to good ratings, a comprehensive overview of the reviews any particular restaruant has garnered over the years and a detailed comparative analysis with restaurants in the same neighborhood. There were various fascinating results we discovered through our visualisations. We found that the Overall Landscape page can allow business owners understand important attributes that matter to their targetted demographic and channelize their resources in a strategic manner. For instance, while studying WiFi related trends in Philidalphia, we found that restaurants without free WiFi garnered twice as many positive ratings (> 3) as those without one. This seems to be counterintuitive at first but can only imply that the concerned demographic isn’t weighing in on WiFi facilities too much while judging their restaurant experience. Another major problem that our app aims to alleviate is analysis of reviews overtime through the Your Restaruant section. In the wordcloud section, the default range for the sentiment slider was set to -0.5 to 0.5 as we believe such a range can allow an insightful analysis while avoiding extreme sentiments. 
+Our final app can provide a holistic view of the general restaurant trends that lead to good ratings, a comprehensive overview of the reviews any particular restaurant has garnered over the years and a detailed comparative analysis with restaurants in the same neighborhood and with similar attributes. This application caters to a wide range of audiences from users who own a restaurant to those who wish to get into this business and are exploring various restaurant ideas and good- t-have amenities for a successful business. The various visualizations we provide ways for explorations along multiple dimensions. For example, the Overall Landscape page can allow business owners understand important attributes that matter to their targetted demographic and channelize their resources in a strategic manner. It could help newbies in the restaurant business gain a sense of what amentities will best cater to their audiences and try to incorporate them while planning for a new restaurant release. For instance, while studying WiFi related trends in Philidalphia, we found that restaurants without free WiFi garnered twice as many positive ratings (> 3) as those without one. This seems to be counterintuitive at first but can only imply that the concerned demographic isn’t weighing in on WiFi facilities too much while judging their restaurant experience. 
+
+![Res Wifi](./image/wifi.png?raw=true)
 
 ## Discussion
 
