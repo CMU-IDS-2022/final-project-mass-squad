@@ -1,8 +1,6 @@
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import altair as alt
-import streamlit as st
-import pandas as pd
 
 bool_attrs = [
     'attributes.ByAppointmentOnly',
@@ -65,6 +63,14 @@ def get_exclusive_attrs(business_id_1, business_id_2, business_df):
 
 
 def compare_businesses(df_reviews, df_business, business_id_1, business_id_2):
+    """
+    Returns an Altair plot comparing ratings of business 1 and business 2 over time
+    :param df_reviews: reviews dataframe
+    :param df_business: business dataframe
+    :param business_id_1: own business
+    :param business_id_2: competitor business
+    :return: Interactive Altair chart
+    """
     business_subset = df_reviews[df_reviews.business_id.isin([business_id_1, business_id_2])][['business_id', 'avg_stars', 'date']]
     business_subset = business_subset.merge(df_business, on="business_id", how="left")
 
