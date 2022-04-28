@@ -91,8 +91,8 @@ The current application of the system provides both granularity and options to d
 
 ## References
 
- [1] Machine Learning and Visualizations with Yelp Dataset
+ [1] [Machine Learning and Visualizations with Yelp Dataset](https://medium.com/@zhiwei_zhang/final-blog-642fb9c7e781)
  
- [2] Yelp visualization
+ [2] [Yelp visualization](https://raunakm90.github.io/posts/yelp-visualization/)
  
- [3] Discover Your Next Favorite Restaurant
+ [3] [Discover Your Next Favorite Restaurant](https://towardsdatascience.com/discover-your-next-favorite-restaurant-exploration-and-visualization-on-yelps-dataset-157d9799123c)
