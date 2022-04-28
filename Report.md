@@ -62,6 +62,23 @@ Another major problem that our app aims to alleviate is analysis of reviews over
 
 ![Word Cloud](./images/word_cloud1.png?raw=true)
 
+The star rating histogram further divides these reviews into relevant bins where as the line chart expressing the change in star rating highlights performance over the years. These two charts allow the user to gain broad overview of the business and complement the insights gained from the wordcloud. An interesting case of this is the restaurant named  Sonic Drive-In, it is evident that the restaurant has been performing poorly with a majority of the reviews beeing 1-stars. The line chart depicts that through 2014-2018 the ratings have been consistently falling but have been picking up for the last three years. This might imply that some recent changes in their order processing has worked in their favor. To gain further insights on this positive sentiment, we dialed the sentiment of the wordcloud to be in the range 0 to 1. This wordcloud highlighted words like “order” and “time”, since this period from 2019 to 2021 has been heavily affected by COVID, it must mean the restaurant has been quick to adapt to the pandemic induced spike in home-deliveries. 
+
+![Graphs](./images/graphs.png?raw=true)
+
+![Word Cloud](./images/word_cloud2.png?raw=true)
+
+
+Finally, the restaurant owners can get further ideas about potential improvements to their restaurant by analyzing how their competitors are performing and what unique amentities they offer that their restaurant lacks. For example, the ‘St Honore Pastries’ restaurant owner in Philadelphia can either choose to analyze all other restaurants in the city of Philadelphia and then add in custom filters on the type of the restaurant and their star ratings or they can choose to view all restaurants in the state of Pennsylvania that have similar attributes to their particular restaurant. Say ‘St Honore Pastries’ chooses to view all other Bakeries and Cafes in Philadelphia that have a rating higher than 4. 
+
+![Map](./images/map1.png?raw=true)
+
+Then they can click on the tooltip of any particular restaurant to reveal details about that business such such their average rating, their kinds of foods/drinks they offer, their top reviews. This views also shows attributes of the other restaurant that this business lacks and can be potentially provided to the customers to bolster favourable sentiment.
+
+![Map](./images/map2.png?raw=true)
+
+This view further allows for a more detailed comparison of the trend of average ratings of the chosen and user’s restaurant over the years to show how these businesses have evolved.
+
 ## Discussion
 
 The initial and the main objective of our application was to make sure we provide the restaurant owners with interactive visualizations that they can review in order to help them get better reviews and be able to improve their service. The idea eventually transformed into something that could have a much broader impact in terms of use for not just restaurant owners but the entrepreneurs who want to enter the business as well as the foodies. The existing yelp review system provides you reviews that you have to scour through to actually figure out what's going wrong and what's going right with the restaurant. The word cloud provides a much cleaner and simpler view into depicting the overall sentiments of the customers. With the overall flow of the ratings throws the years you can then focus on what went well in that specific year which gives you a hint as to the current trends in the restaurant market. Our world is an ever-changing landscape and keeping up with the latest trends is really important thus keeping yourself updated with the yearly trends provides huge insight for the owners and the entrepreneurs. Existing visualizations of the data don't provide you with an overall landscape that is granular enough for the user to select various categories and dig into details of the specific state and city. Another new visualization we add to our application is the competitions page which introduces a similarity measure in the form of cosine similarity that helps the user to find similar restaurants and the owners the option to compare themselves with similar restaurants in terms of categories and the state of ratings. The application overall we feel was able to meet its purpose in providing visualizations that don't overload the user with details initially but provide them with options to dig around if they wish to do more analysis.
