@@ -7,6 +7,13 @@
   * mvijay@andrew.cmu.edu
   * shreyas3@andrew.cmu.edu
 
+## Overview 
+
+With the evolution of companies such as Doordash and Uber Eats, customers have a wide gamut of choices of restaurants at their fingertips with handy access to millions of reviews and ratings and cuisines. It is very easy for customers to filter by locality, cuisines and ratings to shortlist a restaurant to visit or order from. Given such wide options, restaurants need to ramp up their amenities and food offerings in order to get more favourable reviews and ratings and attract even more customers. In this situation, they have little options to analyze salient aspects of their business, find out what is lacking and what else can be improved. Moreover, for newbies in the restaurant industry, there are limited avenues for comprehensively analyzing the industry’s landscape and making decisions about what cuisines to serve or what amenities to offer. Motivate by this lack of a comprehensive analysis tools for restaurant owner’s we develop this application that processes millions of yelp restaurant reviews, ratings and attributes and offers an array of interactive visualizations to aid restaurant owners make the right decisions for their business.
+
+![Overview](/images/overview.png)
+
+
 ## Work distribution
 
 The contribution of each team member is listed below - 
