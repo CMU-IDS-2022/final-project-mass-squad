@@ -11,10 +11,10 @@
 
 The contribution of each team member is listed below - 
 
-* Aishwarya Jadhav
-* Sidharth Kathpal
-* Shreya Sharma
-* Malaika Vijay - data pre-processing, business similarity score computation, reviews sentiment analysis, visualization comparing the ratings of businesses over time
+* Aishwarya Jadhav - data preprocessing, map visualization
+* Sidharth Kathpal - data preprocessing, overall rating distribution visualizations
+* Shreya Sharma - data preprocessing, word cloud, rating distribution for individual restaurants
+* Malaika Vijay - data preprocessing, similarity score computation, sentiment analysis, visualization comparing the ratings of businesses over time
 
 
 ## How to Run
