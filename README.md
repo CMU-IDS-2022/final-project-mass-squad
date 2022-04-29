@@ -11,6 +11,21 @@
 
 Update towards the end of the project.
 
+## How to Run
+
+### Environment Setup
+To set up the environment, run <code> pip install -r requirements.txt </code>
+
+### Data Preparation
+
+* Download the reviews and business json data from this link - [Yelp Dataset](https://www.yelp.com/dataset/download)
+* Preprocess the business json data by running <code> python business_preproc.py --in-file <path_to_business_json> --out-file <path_to_output_csv> </code>
+* Preprocess the reviews json data by running <code> python reviews_preproc.py --in-file <path_to_reviews_json> --out-file <path_to_output_csv> --business-file <path_to_preprocessed_business_csv> </code>
+
+### Run the Streamlit Application 
+
+ To run the streamlit application, run <code> streamlit run streamlit_app.py </code>
+
 ## Deliverables
 
 ### Proposal
