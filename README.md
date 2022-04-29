@@ -9,7 +9,13 @@
 
 ## Work distribution
 
-Update towards the end of the project.
+The contribution of each team member is listed below - 
+
+* Aishwarya Jadhav
+* Sidharth Kathpal
+* Shreya Sharma
+* Malaika Vijay - data pre-processing, business similarity score computation, reviews sentiment analysis, visualization comparing the ratings of businesses over time
+
 
 ## How to Run
 
