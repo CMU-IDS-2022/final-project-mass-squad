@@ -19,7 +19,7 @@ With the evolution of companies such as Doordash and Uber Eats, customers have a
 The contribution of each team member is listed below - 
 
 * Aishwarya Jadhav - data preprocessing, map visualization
-* Sidharth Kathpal - data preprocessing, overall rating distribution visualizations
+* Sidharth Kathpal - data preprocessing, overall rating distribution visualizations, deployment of the app to streamlit, maintainence
 * Shreya Sharma - data preprocessing, word cloud, rating distribution for individual restaurants
 * Malaika Vijay - data preprocessing, similarity score computation, sentiment analysis, visualization comparing the ratings of businesses over time
 
